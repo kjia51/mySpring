@@ -33,9 +33,11 @@ public class MemberController {
 		System.out.println("id :"+member.getId());
 		System.out.println("pw : "+member.getPw());
 		
+		
 		service.login(member, model);
 		if(member!=null && !"".equals(member)) {
 			if("admin".equalsIgnoreCase(member.getId())) {
+				System.out.println("board/list");
 				return "/board/list";
 			}
 			return "user";			

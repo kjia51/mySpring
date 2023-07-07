@@ -125,7 +125,7 @@ alert('${msg }');
 			<tr>
 			<td colspan="5" class="center">
 				<!-- 페이지블록 -->
-				<%@include file="../common/PageNavi.jsp" %>
+				
 			</td>	
 		</tr>
   </tbody>

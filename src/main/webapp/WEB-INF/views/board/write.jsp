@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -31,6 +32,12 @@ window.onload=function(){
 
 
 }
+
+	function requestAction(action){
+		viewForm.action=action;
+		viewForm.submit();
+		
+	}
 </script>
 </head>
 <meta charset="UTF-8">
@@ -50,10 +57,9 @@ window.onload=function(){
   
   
   <form method="post" action="/board/write">
-  <input type="text" name="bno" value="${board.bno }">
   <div class="mb-3">
     <label for="title" class="form-label">제목</label>
-    <input type="text" name="title" id="title" class="form-control" readonly  value="${board.title }">
+    <input type="text" name="title" id="title" class="form-control"   value="${board.title }">
   </div>
   <div class="mb-3">
     <label for="content" class="form-label">내용</label>
@@ -64,11 +70,19 @@ window.onload=function(){
     <input type="text" name="writer" id="writer" class="form-control" value="${board.writer }">
 	</div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+	<c:if test="${not empty board.bno }" var="res">
+ 	 <input type="text" name="bno" value="${board.bno }" >	
+	  <button class="btn btn-primary" type="submit" onclick="requestAction('/board/editAction')">수정하기</button>
+	</c:if>
+	<c:if test="${not res }">
 	  <button class="btn btn-primary" type="submit">글쓰기</button>
-	  <button class="btn btn-primary" type="reset">초기화</button>
+	</c:if>
+	  <button class="btn btn-primary" type="reset" onclick="requestAction('/board/editAction')">초기화</button>
 	</div>
 </form>
 </div>
+
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

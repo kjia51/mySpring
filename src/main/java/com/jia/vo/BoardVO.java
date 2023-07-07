@@ -1,6 +1,8 @@
 package com.jia.vo;
 
-import java.util.Date;
+
+
+import java.sql.Date;
 
 import lombok.Data;
 
@@ -12,4 +14,5 @@ public class BoardVO {
 	private String writer;
 	private Date regdate;
 	private Date updatedate;
+	private int visitcount;
 }

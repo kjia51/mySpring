@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.jia.mapper.BoardMapper;
 import com.jia.vo.BoardVO;
 import com.jia.vo.Criteria;
+import com.jia.vo.PageDto;
 
 /**
  * 각 계층간의 연결은 인터페이스를 활용하여 느슨한 결합을 합니다.
@@ -22,6 +24,7 @@ import com.jia.vo.Criteria;
  * 2. 구현체의 전환이 용이 : 구현체의 변경, 교체가 용이
  * 3. 테스트 용이성 : 단위테스트 시 테스트 용 구현체를 이용함으로써 테스트 수행
  * @author user
+ * 
  *
  */
 @Service
@@ -31,10 +34,24 @@ public class BoardServiceImpl implements BoardService{
 	private BoardMapper boardMapper;
 		
 	@Override
-	public List<BoardVO> getListXml() {
-		// TODO Auto-generated method stub
+	public List<BoardVO> getListXml(Criteria cri, Model model) {
+		/**
+		 * 1. 리스트 조회
+		 * 		- 검색어, 페이지 정보(startNo~endNo까지 조회)
+		 * 2. 총 건수 조회 
+		 * 3. pageDto 객체  생성
+		 */
 		
-		return boardMapper.getListXml();
+		int totalCnt = boardMapper.totalCount(cri);
+		List<BoardVO> list = boardMapper.getListXml(cri);
+		PageDto pageDto = new PageDto(cri, totalCnt);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("pageDto", pageDto);
+		
+
+		return list;
 	}
 
 	@Override
@@ -67,17 +84,23 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.update(board);
 	}
 
+
+
 	@Override
-	public int totalCount() {
+	public int totalCount(Criteria cri) {
 		// TODO Auto-generated method stub
-		return boardMapper.totalCount();
+		return boardMapper.totalCount(cri);
 	}
 
 	@Override
-	public List<BoardVO> getPageList(Criteria cri) {
+	public int count(int bno) {
 		// TODO Auto-generated method stub
-		return boardMapper.getPageList(cri);
+		return boardMapper.count(bno);
 	}
+
+
+
+
 
 
 	

@@ -14,7 +14,8 @@
 		<input type="submit" value="로그인"><br>
 		<input type="button" value="아이디찾기">
 		<input type="button" value="비밀번호 재설정">
-		<input type="button" value="회원가입">
+		<input type="button" value="회원가입" onclick="location.href='/join'">
 	</form>
+	
 </body>
 </html>

@@ -15,6 +15,13 @@
 <link href="/resources/css/style.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function requestAction(url){
+		viewForm.action=url;
+		viewForm.submit();
+		
+	}
+</script>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
@@ -26,20 +33,21 @@
   <input type="hidden" name="bno" value="${board.bno }">  
   <div class="mb-3">
     <label for="title" class="form-label">제목</label>
-    <input type="text" name="title" id="title" class="form-control" readonly value="${board.title }" >
+    <input type="text" name="title" id="title" class="form-control"  value="${board.title }" >
   </div>
   <div class="mb-3">
     <label for="content" class="form-label">내용</label>
-    <textarea type="text" name="content" id="content" class="form-control" readonly rows="3">${board.content }</textarea>
+    <textarea type="text" name="content" id="content" class="form-control"  rows="3">${board.content }</textarea>
   </div>
   <div class="mb-3">
     <label for="writer" class="form-label">작성자</label>
-    <input type="text" name="writer" id="writer" class="form-control" readonly value="${board.writer }">
+    <input type="text" name="writer" id="writer" class="form-control"  value="${board.writer }">
     
 	</div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
-	  <input type="button" onclick="requestAction('/board/edit')" value="수정">
-	  <input type="button" onclick="requestAction('/board/delete')" value="삭제">
+	  <input type="button" onclick="requestAction('editAction')" value="수정">
+	  <input type="button" onclick="location.href='/board/list'" value="목록">
+	  <input type="button" onclick="requestAction('delete')" value="삭제">
 	</div>
 </form>
 </div>

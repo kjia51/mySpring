@@ -6,6 +6,23 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript">
+
+let msg = ${msg};
+window.onload=function(){
+	if(msg!=""){
+		document.querySelector(".modal-body").innerHTML = msg;
+		document.querySelector("$btnModalSave").style.display = 'none';
+		
+	}
+	const myModal = new bootstrap.Modal('#myModal', {
+		  keyboard: false
+		});
+
+	myModal.show();
+}
+</script>
+
 <body>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
@@ -32,5 +49,24 @@
     </div>
   </div>
 </nav>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+        <button type="button" class="btnModalSave">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

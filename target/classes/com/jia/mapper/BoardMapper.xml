@@ -5,8 +5,20 @@
 <mapper namespace="com.jia.mapper.BoardMapper">
 
 	<select id="getListXml" resultType="com.jia.vo.BoardVO">
-	<![CDATA[select * from tbl_board where bno>0]]>	
+	<![CDATA[select * 
+		from (
+			select t.*, rownum rn 
+				from(
+					select * 
+					from tbl_board
+					where bno>0
+					]]>
+					<include refid="crisql"></include>
+					order by bno desc) t) 
+					where rn between #{startNo} and #{endNo}
+					order by rn
 	</select>
+	
 	
 	<!-- select 태그 작성
 	id : mapper 의 메서드명
@@ -45,19 +57,43 @@
 	</delete>
 	
 	<update id="update">
-		update tbl_board set title=#{title}, content=#{content}, updatedate = sysdate where bno=#{bno}
+		update tbl_board set title=#{title}, content=#{content}, writer=#{writer}, updatedate = sysdate where bno=#{bno}
 	</update>
 	
+	
 	<select id="totalCount" resultType="int">
-		select count(*) from tbl_board
+		select count(*) 
+		from tbl_board
+		where 1=1 
+		<include refid="crisql"></include>
+
 	</select>
 	
-	<select id="getPageList" resultType="com.jia.vo.BoardVO">
-		select * from (select t.*, rownum rn from(select * from tbl_board 
-			order by bno desc) t) where rn between #{startNo} and #{endNo} 
-			<if test="#{searchWord}!= null and !#{searchWord}.equals('')">
-			where #{searchField} like '%#{searchWord}%'
-			</if>
-			 order by rn
-	</select>
+	<!-- 반복되는 쿼리를 미리 작성해놓고 재활용합니다
+	반복할 쿼리 선언 : <sql id="">
+	선언한 쿼리 사용 : <include refId="">
+	변수사용방법 <property name="">
+	refId = reference id
+	 -->
+	 
+	<sql id="crisql">
+		<choose>
+			<when test="searchField == 'title'">
+				and title like '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchField == 'content'">
+				and content like '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchField == 'writer'">
+				and writer like '%'||#{searchWord}||'%'
+			</when>
+		</choose>
+	</sql>
+	
+	<update id="count" parameterType="int">
+	 update tbl_board set visitcount = visitcount + 1 where bno = #{bno} 
+	 </update>
+	
+
+
 </mapper>

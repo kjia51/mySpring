@@ -10,21 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.jia.service.BoardService;
 import com.jia.vo.BoardVO;
 import com.jia.vo.Criteria;
-import com.jia.vo.PageDto;
 
 import lombok.extern.log4j.Log4j;
 
+
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping("board/*")
 @Log4j
 public class BoardController {
 	
@@ -33,37 +30,40 @@ public class BoardController {
 		
 	}
 	@GetMapping("message")
-	public void message(Mode mode) {
+	public void message(Model model) {
 		
 	}
-
+	@GetMapping("join")
+	public String join() {
+		return "/join";
+	}
 	
+	@GetMapping("login")
+	public String login() {
+		return "/login";
+	}
 	@Autowired
 	BoardService boardService;
 	
+	/**
+	 * 파라메터의 자동수집 기본생성자를 이용해서 객체 생성
+	 * setter 메서드를 이용해서 생성
+	 * @param cri
+	 * @param model
+	 */
+	
 	@GetMapping("list")
-	public void getList(@Param("pageNo") int pageNo, @Param("Criteria") Criteria paramcri, Model model) {
-		int totalCnt = boardService.totalCount();
-		Criteria cri = new Criteria(paramcri.getSearchField(), paramcri.getSearchWord(), pageNo);
-		List<BoardVO> list = boardService.getPageList(cri);
-		PageDto pageDto = new PageDto(totalCnt, cri);
-		//List<BoardVO> list = boardService.getListXml();
+	public List<BoardVO> getList(Criteria cri, Model model) {
+		List<BoardVO> list = boardService.getListXml(cri, model);
+		log.info("cri : "+ cri);
 		log.info("==============================");
-		log.info(list);
+		log.info("list : " + list);
 		log.info("==============================");
-		model.addAttribute("list",list);
-		model.addAttribute("pageDto",pageDto);
-		model.addAttribute("totalCnt",totalCnt);
+//		model.addAttribute("list",list);
+			return null;
+		
+	}
 
-		
-	}
-	@GetMapping("pageNavi")
-	public String PageNavi() {
-		return "/common/pageNavi";
-		
-	}
-	
-	
 	/**
 	 * requestMapping 에 board
 	 *  /board/write
@@ -71,14 +71,13 @@ public class BoardController {
 	 * @param model
 	 */
 	@GetMapping("view")
-	public String getOne(@Param("bno") int bno, Model model) {
+	public String getOne(@Param("bno") int bno, Model model, Criteria cri) {
 		BoardVO board = boardService.getOne(bno);
+		boardService.count(bno);
 		model.addAttribute("board",board);
 		return "/board/view";
 	}
-	
-	
-	
+
 	/**
 	 * RedirectAttributes 🍕🍕🍔🍕🍕🍔
 	 * Model과 같이 매개변수로 받아 사용
@@ -91,7 +90,7 @@ public class BoardController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("write")
+//	@PostMapping("write")
 	public String writeAction(BoardVO board, RedirectAttributes redirect, Model model) {
 		
 //		req.setCharacter
@@ -119,18 +118,46 @@ public class BoardController {
 		
 		//return "redirect:/board/list";
 	}
-	
-	@GetMapping("delete")
-	public void delete(@Param("bno") int bno) {
-		int res = boardService.delete(bno);
-		if(res>0) {
-			
-		}
-	}
+
+	/**
+	 * 수정하기 bno를 파라메터로 받아야함
+	 * 버튼 버튼의 액션이 달라짐
+	 * @param paramVO
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("edit")
 	public String edit(BoardVO paramVO, Model model) {
 		BoardVO board = boardService.getOne(paramVO.getBno());
 		model.addAttribute("board",board);
 		return "/board/edit";
+	}	
+	@GetMapping("editAction")
+	public String editAction(BoardVO board, RedirectAttributes redirect, Model model) {
+		//수정
+		int res = boardService.update(board);
+		if(res>0) { 
+			// redirect 시 request 영역이 공유되지 않으므로 RedirectAttributes 사용
+			redirect.addFlashAttribute("msg","수정 완료");
+			//상세페이지로 이동
+			return "redirect:/board/view?bno="+board.getBno();			
+		} else {			
+			model.addAttribute("msg","수정 중 예외사항 발생");
+			return "/board/message";			
+		}
+	}
+	
+	@GetMapping("delete")
+	public  String delete(@Param("bno") int bno, RedirectAttributes redirect, Model model) {
+		int res = boardService.delete(bno);
+		if(res > 0) {
+			redirect.addFlashAttribute("msg", "삭제되었습니다.");
+			return "redirect:/board/list";
+		}
+		else {
+			model.addAttribute("msg","삭제중");
+			return "/board/message";
+			
+		}
 	}
 }

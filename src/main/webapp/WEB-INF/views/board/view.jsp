@@ -19,8 +19,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-	function requestAction(action){
-		viewForm.action=action;
+	function requestAction(url){
+		viewForm.action=url;
 		viewForm.submit();
 		
 	}
@@ -30,8 +30,15 @@
 <%@include file="../common/header.jsp" %>
 <p><br><br><br></p>
 
+
 <main class="container">
-<h3>게시판 상세화면</h3>
+  <div class="bg-light p-5 rounded">
+    <h1>게시판 상세화면</h1>
+    <p class="lead">부트스트랩을 이용한 게시판 만들기</p>
+    <a class="btn btn-lg btn-primary" href="/board/list?pageNo=${param.pageNo }&searchField=${param.searchField}&searchWord=${param.searchWord}" role="button">목록보기 &raquo;</a>
+  </div>
+  <p></p>
+
   <div class="list-group w-auto">
   <form method="get" action="" name="viewForm">
   <input type="hidden" name="bno" value="${board.bno }">  
@@ -50,13 +57,11 @@
 	</div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 	  <input type="button" onclick="requestAction('/board/edit')" value="수정">
-	  <input type="button" onclick="requestAction('/board/delete')" value="삭제">
+	  <input type="button" onclick="requestAction('/board/delete?bno=${board.bno}')" value="삭제">
 	</div>
 </form>
 </div>
 </main>
-
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>    
 </body>
 </html>
