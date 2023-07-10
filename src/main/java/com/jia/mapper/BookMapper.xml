@@ -41,7 +41,7 @@
 	</select>
 	
 	<update id="visitCnt">
-		update book set visitcount=visitcount+1 where no = #{no};
+		update book set visitcount=visitcount+1 where no = #{no}
 	</update>
 
 	

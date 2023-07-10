@@ -2,6 +2,7 @@ package com.jia.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,11 +37,11 @@ public class BookController {
 	}
 	
 	@GetMapping("view")
-	public BookVO getOne(BookVO book, Model model) {
-		BookVO bookVo = bookService.getOne(book.getNo(), model);
-		bookService.visitCnt(book.getNo());
+	public BookVO getOne(@Param("no") int no, Model model) {
+		BookVO bookVo = bookService.getOne(no, model);
+		bookService.visitCnt(no);
 		model.addAttribute("book", bookVo);
-		return book;
+		return bookVo;
 		
 	}
 	@GetMapping("join")
