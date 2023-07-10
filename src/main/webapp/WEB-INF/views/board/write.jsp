@@ -75,7 +75,7 @@ window.onload=function(){
 	  <button class="btn btn-primary" type="submit" onclick="requestAction('/board/editAction')">수정하기</button>
 	</c:if>
 	<c:if test="${not res }">
-	  <button class="btn btn-primary" type="submit">글쓰기</button>
+	  <button class="btn btn-primary" type="submit" >글쓰기</button>
 	</c:if>
 	  <button class="btn btn-primary" type="reset" onclick="requestAction('/board/editAction')">초기화</button>
 	</div>

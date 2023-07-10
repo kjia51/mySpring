@@ -15,6 +15,7 @@ import com.jia.vo.Member;
 public class RestController {
 	
 	//객체 반환중
+	//http://localhost:8080/rest?id=test&pw=1234
 	@GetMapping("rest")
 	//메서드 선언부의 리턴타입에 response body 어노테이션 추가
 

@@ -107,7 +107,7 @@ function requestAction(url,bno){
           <p class="mb-0 opacity-75">${vo.content }</p>
         <small class="opacity-50 text-nowrap">${vo.visitcount }</small>
         </div>
-        <small class="opacity-50 text-nowrap">${vo.regdate }</small>
+        <small class="opacity-50 text-nowrap">${vo.newdate }</small>
       </div>
     </a>
     </c:forEach>

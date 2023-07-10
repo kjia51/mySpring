@@ -38,6 +38,7 @@ public class BookController {
 	@GetMapping("view")
 	public BookVO getOne(BookVO book, Model model) {
 		BookVO bookVo = bookService.getOne(book.getNo(), model);
+		bookService.visitCnt(book.getNo());
 		model.addAttribute("book", bookVo);
 		return book;
 		

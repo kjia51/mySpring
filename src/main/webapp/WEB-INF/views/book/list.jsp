@@ -6,7 +6,7 @@
 <%@include file="./header.jsp" %>
  <!-- 게시판 -->
  <div id="page-wrapper">
-
+${pageDto }
      <div class="row">
          <div class="col-lg-12">
              <h1 class="page-header"></h1>
@@ -67,7 +67,8 @@
                              </c:forEach>
                          </tbody>
                      </table>
-                     <div class='text-center'><%@include file="pageNavi.jsp" %></div>
+                     <div class='text-center'>
+                     <%@include file="pageNavi.jsp" %></div>
 
                  </div>
                  <!-- /.panel-body -->

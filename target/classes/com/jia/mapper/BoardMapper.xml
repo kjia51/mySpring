@@ -9,7 +9,7 @@
 		from (
 			select t.*, rownum rn 
 				from(
-					select * 
+					select bno, title, content, writer, decode(trunc(regdate), trunc(sysdate), to_char(regdate,'hh24:mi:ss'), to_char(regdate, 'yy/MM/dd')) newdate, updatedate, visitcount
 					from tbl_board
 					where bno>0
 					]]>
