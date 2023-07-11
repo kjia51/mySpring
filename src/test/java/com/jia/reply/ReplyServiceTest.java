@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.jia.mapper.ReplyMapper;
 import com.jia.service.ReplyService;
+import com.jia.vo.Criteria;
 import com.jia.vo.ReplyVO;
 
 import lombok.extern.log4j.Log4j;
@@ -27,7 +28,10 @@ public class ReplyServiceTest {
 	@Test
 	public void test() {
 		assertNotNull(service);
-		List<ReplyVO> list = service.getList(50);
+		Criteria cri = new Criteria();
+		cri.setAmount(5);
+		cri.setPageNo(1);
+		List<ReplyVO> list = service.getList(50, cri);
 		log.info("=================================");
 		list.forEach(reply->{
 			log.info("list : " +reply.getRno());

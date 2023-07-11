@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jia.service.ReplyService;
+import com.jia.vo.Criteria;
+import com.jia.vo.PageDto;
 import com.jia.vo.ReplyVO;
 
 import lombok.extern.log4j.Log4j;
@@ -34,14 +36,32 @@ public class ReplyController {
 	 * 		URL 경로에 있는 값을 파라미터로 추출하려고 할 때 사용 
 	 * 		경로의 일부분을 파라메터로 사용
 	 * 
+	 * url 경로의 일부를 변수로 사용
 	 *	/reply/list/83
 	 * @return
 	 */
-	@GetMapping("/reply/list/{bno}")
-	public List<ReplyVO> getList(@PathVariable("bno") int bno, Model model){
-		log.info("bno : " + bno);
+	@GetMapping("/reply/list/{bno}/{page}")
+	public Map<String, Object> getList(@PathVariable("bno") int bno, @PathVariable("page") int page){
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		return service.getList(bno);
+		log.info("bno : " + bno);
+		log.info("page : " + page);
+
+		Criteria cri = new Criteria();
+		cri.setPageNo(page);
+		
+		//페이지 처리(시작~끝)
+		List<ReplyVO> list = service.getList(bno, cri);
+		int total = service.total(bno);
+		
+		//페이지 블럭을 생성
+		PageDto pageDto = new PageDto(cri, total);
+		
+		map.put("list", list);
+		map.put("pageDto", pageDto);
+		
+		
+		return map;
 	}
 	
 	@GetMapping("/reply/delete/{rno}")
@@ -56,24 +76,13 @@ public class ReplyController {
 		}
 		return map;
 	}
-	@GetMapping("/reply/edit/{rno}")
-	public Map<String, Object> edit(@PathVariable("rno") int rno){
-		Map<String, Object> map = new HashMap<String, Object>();
-		int res = service.update(rno);
-		if(res > 0) {
-			map.put("result", "success");
-		} else {
-			map.put("result", "fail");
-			map.put("message", "댓글 수정 중 예외사항이 발생 하였습니다.");
-		}
-		return map;
-	}
+
 	
 	
 	/**
 	 * RequestBody
 	 * 		JSON 데이터를 원하는 타입으로 바인딩 처리
-	 * 
+	 * 		파라메터 자동수집
 	 * @param vo
 	 * @return
 	 */
@@ -91,6 +100,24 @@ public class ReplyController {
 		} else {
 			map.put("result", "fail");
 			map.put("message", "댓글 등록중 예외사항이 발생 하였습니다.");
+		}
+		return map;
+	}
+	
+	@PostMapping("/reply/editAction")
+	public Map<String, Object> update(@RequestBody ReplyVO vo){
+		log.info("================= update");
+		log.info("replyVO" + vo);
+		
+		int res = service.update(vo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		if(res>0) {
+			map.put("result", "success");
+		} else {
+			map.put("result", "fail");
+			map.put("message", "댓글 업데이트 중 예외사항이 발생 하였습니다.");
 		}
 		return map;
 	}

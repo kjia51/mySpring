@@ -4,10 +4,10 @@
   
   <mapper namespace="com.jia.mapper.ReplyMapper">
   	<select id="getList" resultType="com.jia.vo.ReplyVO">
-  		select rno, bno, reply, replyer, to_char(replyDate, 'yyyy-MM-dd') replyDate, updateDate 
+  		select * from(select t.*, rownum rn from(select rno, bno, reply, replyer, replyDate, updateDate 
   		from tbl_reply 
   		where bno=#{bno}
-  		order by rno desc
+  		order by rno desc) t ) where rn between #{cri.startNo} and #{cri.endNo} order by rn
   	</select>
   	
   	<insert id="insert">
@@ -19,6 +19,11 @@
   	</delete>
   	
   	<update id="update">
-  		update tbl_reply set reply=#{reply} where rno=#{rno}
+  		update tbl_reply set reply=#{reply}, updateDate=sysdate where rno=#{rno} 
   	</update>
+  	
+  	<select id="total" resultType="int" >
+  		select count(*) from tbl_reply where bno=#{bno}
+  	</select>
+  
   </mapper>

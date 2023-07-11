@@ -17,6 +17,7 @@
   <div class="col-sm-3">
 	  <select class="form-select" name="searchField"  aria-label="Default select example">
 	  <option selected>선택</option>
+
 	  <option value="title" ${pageDto.cri.searchField eq "title" ? "selected" : "" }>제목</option>
 	  <option  value="content" ${pageDto.cri.searchField eq "content" ? "selected" : "" }>내용</option>
 	  <option value="writer" ${pageDto.cri.searchField eq "writer" ? "selected" : "" }>저자</option>

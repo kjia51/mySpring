@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jia.mapper.ReplyMapper;
+import com.jia.vo.Criteria;
 import com.jia.vo.ReplyVO;
 
 @Service
@@ -15,8 +16,8 @@ public class ReplyServiceImpl implements ReplyService {
 	ReplyMapper replyMapper;
 	
 	@Override
-	public List<ReplyVO> getList(int bno) {
-		return replyMapper.getList(bno);
+	public List<ReplyVO> getList(int bno, Criteria cri) {
+		return replyMapper.getList(bno, cri);
 	}
 
 	@Override
@@ -32,10 +33,18 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public int update(int rno) {
+	public int update(ReplyVO vo) {
 		// TODO Auto-generated method stub
-		return replyMapper.update(rno);
+		return replyMapper.update(vo);
 	}
+
+	@Override
+	public int total(int bno) {
+		// TODO Auto-generated method stub
+		return replyMapper.total(bno);
+	}
+
+
 
 
 
