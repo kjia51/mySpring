@@ -31,7 +31,7 @@ function fetchPost(url, obj, callback){
 // 댓글 조회 및 출력
 function getReplyList(){
 	let bno = document.querySelector('#bno').value;
-	let page = 1;//document.querySelector('#pageNo').value
+	let page = document.querySelector('#pageNo').value;
 	console.log('bno');
 	console.log('/reply/list/'+bno+'/'+page);
 	console.log(`/reply/list/${bno}/${page}`);
@@ -47,13 +47,6 @@ function replyView(map){
 	console.log(list);
 	// div 초기화
 	replyDiv.innerHTML=''
-	+'총 <strong>'+pageDto.total+'</strong>건, <strong>'+pageDto.startNo+'</strong>/'+pageDto.endNo+'페이지';
-	// 답글을 DIV에 출력
-	//document.querySelector("reply0").innerHTML = '';
-
-
-	replyDiv.innerHTML += '';
-	let replyBlock =''
 		 +      '<form class="row g-3 align-items-center" name="searchForm">'			
 		 +	'<fieldset>'
 		 +		'<span class="bunch">'
@@ -65,6 +58,13 @@ function replyView(map){
 		 +		'<input type="submit" class="btnType8" title="검색" value="검색">'
 		 +	'</fieldset>'
 		+ '</form>'
+	+'총 <strong>'+pageDto.total+'</strong>건, <strong>'+pageDto.startNo+'</strong>/'+pageDto.endNo+'페이지';
+	// 답글을 DIV에 출력
+	//document.querySelector("reply0").innerHTML = '';
+
+
+	replyDiv.innerHTML += '';
+	let replyBlock =''
 		+ '<p></p>'
 	 +'<table class="table text-break text-center">'
 	 +'	 <colgroup>              '
@@ -91,7 +91,7 @@ function replyView(map){
 	 +'<tr id="tr'+reply.rno+'" data-value= "'+ reply.reply+'">'
 	 +'<td>'+reply.rno+'</td>'
 	 +'<th scope="row" class="text-start">'
-	    + '			<p>' + reply.reply 
+	    + '			<p><a href="#">' + reply.reply + '</a>'
 	    + ' 			<i class="fa-regular fa-pen-to-square" onclick="replyEdit('+reply.rno+')"></i>'
 	    + ' 			<i class="fa-regular fa-trash-can" onclick="replyDelete('+reply.rno+')"></i>'
 	    + '			</p>'
@@ -108,7 +108,7 @@ function replyView(map){
 	replyDiv.innerHTML += replyBlock;
 	let pageBlock='';
 	//페이지 블럭 생성
-	pageBlock += '<input type="hidden" name="page" id="page" value="1"> '
+	pageBlock += '<input type="hidden" name="page" id="page"> '
 		 + '<nav aria-label="...">'
 		  +'<ul class="pagination justify-content-center">';
 		  
@@ -171,30 +171,33 @@ function replyEdit(rno){
 	let tr = document.querySelector('#tr'+rno);
 	let replyTxt =  tr.dataset.value;
 	tr.innerHTML= ''
-//		  +'<td colspan="6">'
-//	      + '<div class="input-group mb-3">'
-//	      +'<input type="text" id="editReply'+rno+'" class="form-control" placeholder="Recipients username" aria-label="Recipients username" aria-describedby="basic-addon2">' 
-//		  +'<span class="input-group-text" id="btnWrite" onclick="replyEditAction('+rno+')">수정하기</span>'
-//		  +'</div>';
-//		  +'</td>';
-		   +'<td colspan="6">'
-           +'<div class="accordion" id="accordionExample">'
-           + ' <div class="accordion-item">'
-		   +  '  <h2 class="accordion-header" id="headingOne">'
-		   +   '   <button class="accordion-button bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
-		   +    rno +' 수정 중...'
-		   +     ' </button>'
-		   +    '</h2>'
-		   +    '<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">'
-	       + '<div class="accordion-body input-group mb-3">'
-	       +'<input type="text" id="editReply'+rno+'" value="'+replyTxt+'"class="form-control" placeholder="Recipients username" aria-label="Recipients username" aria-describedby="basic-addon2">' 
-		   +'<span class="input-group-text" id="btnWrite" onclick="replyEditAction('+rno+')">수정하기</span>'
-		   +'</div>'
-		   +    '</div>'
-		   +  '</div>'
-		   +  '</div>'
- 		   + '</td>';
+		  +'<td colspan="6">'
+	      + '<div class="input-group">'
+	      +'  <span class="input-group-text">'+rno+'</span>'
+	      +'<input type="text" id="editReply'+rno+'" value="'+replyTxt+'" class="form-control" placeholder="Recipients username" aria-label="Recipients username">' 
+		  +'<span class="input-group-text" id="btnWrite" onclick="replyEditAction('+rno+')">수정하기</span>'
+		  +'</div>'
+		  +'</td>';
+//		   +'<td colspan="6">'
+//           +'<div class="accordion" id="accordionExample">'
+//           + ' <div class="accordion-item">'
+//		   +  '  <h2 class="accordion-header" id="headingOne">'
+//		   +   '   <button class="accordion-button bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
+//		   +    rno +' 수정 중...'
+//		   +     ' </button>'
+//		   +    '</h2>'
+//		   +    '<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">'
+//	       + '<div class="accordion-body input-group mb-3">'
+//	       +'<input type="text" id="editReply'+rno+'" value="'+replyTxt+'"class="form-control" placeholder="Recipients username" aria-label="Recipients username" aria-describedby="basic-addon2">' 
+//		   +'<span class="input-group-text" id="btnWrite" onclick="replyEditAction('+rno+')">수정하기</span>'
+//		   +'</div>'
+//		   +    '</div>'
+//		   +  '</div>'
+//		   +  '</div>'
+// 		   + '</td>';
 }
+
+
 
 function replyEditAction(rno){
 
@@ -202,7 +205,10 @@ function replyEditAction(rno){
 	let obj = {rno:rno, reply:reply};
 	fetchPost('/reply/editAction/', obj, replyRes);
 }
-
+function getPage(page){
+	document.querySelector("#pageNo").value =page;
+	getReplyList();
+}
 
 
 

@@ -63,7 +63,7 @@ window.addEventListener('load',function(){
 		viewForm.submit();		
 	}
 	*/
-	$("#dateFrom").datepicker();
+	$("#datepicker").datepicker();
 
 </script>
 
@@ -77,7 +77,7 @@ window.addEventListener('load',function(){
   <div class="list-group w-auto">
   <form method="get" action="" name="viewForm">
   <input type="hidden" name="bno" id="bno" value="${board.bno }">  
-  <input type="hidden" name="pageNo" value="${param.pageNo }">  
+  <input type="text" name="pageNo" id="pageNo" value="${param.pageNo }">  
   <input type="hidden" name="searchField" value="${param.searchField }">  
   <input type="hidden" name="searchWord" value="${param.searchWord }">  
   <div class="mb-3 " >
