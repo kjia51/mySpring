@@ -76,31 +76,60 @@ function replyView(map){
 	console.log(pageDto.endNo);
 	
 	// div 초기화
-	replyDiv.innerHTML='';
+	replyDiv.innerHTML=''
+	+'총 <strong>'+pageDto.total+'</strong>건, <strong>'+pageDto.startNo+'</strong>/'+pageDto.endNo+'페이지';
 	// 답글을 DIV에 출력
 	//document.querySelector("reply0").innerHTML = '';
-	list.forEach((reply, index) => {
-	replyDiv.innerHTML 
-	+= '<figure id="reply' + index + '" data-value="'+reply.reply+'" data-rno="'+reply.rno+'">'
-	  +'	<blockquote class="blockquote">'
-	   + '		<p>'+reply.reply
-	   +'<i class="fa-solid fa-user-pen" onclick="replyEdit('+index+','+reply.rno+')"></i>'
-	   +'<i class="fa-solid fa-eraser" onclick="replayDelete('+reply.rno+')"></i>'
-	   +'</p>'
-	  + '	</blockquote>'
-	  
-	 + '	<figcaption class="blockquote-footer">'
-	   +  reply.replyer
-	   + '<cite title="Source Title">'+reply.replyDate+'</cite>'
-	  + '	</figcaption>'
-	+ '</figure>';
 
-	});                                                                                        
+
+	replyDiv.innerHTML += ''
+	 +'<table class="table">'
+	 +'	 <colgroup>              '
+	 +'	 <col style="width:5%">  '
+	 +'	 <col style="width:30%"> '
+	 +'	 <col style="width:15%"> '
+	 +'	 <col style="width:20%"> '
+	 +'	 <col style="width:10%"> '
+	 +'	 </colgroup>'
+	 +'<thead>     '
+	 +'<tr>'
+	 +'<th scope="col">No.</th>'
+	 +'<th scope="col">댓글내용</th>'
+	 +'<th scope="col">작성자</th>'
+	 +'<th scope="col">작성일</th>'
+	 +'<th scope="col">조회수</th>'
+	 +'</tr>'
+	 +'</thead>'
+	 +'</table>';
+	let replyBlock='<table class="table">'
+		 +'	 <colgroup>              '
+		 +'	 <col style="width:5%">  '
+		 +'	 <col style="width:30%"> '
+		 +'	 <col style="width:15%"> '
+		 +'	 <col style="width:20%"> '
+		 +'	 <col style="width:10%"> '
+		 +'	 </colgroup><thead>     '
+		 +'<tbody class="table-group-divider">';
+	list.forEach((reply, index) => {
+	replyBlock += ''
+	 +'<tr>'
+	 +'<td>'+index+'</td>'
+	 +'<th scope="row">'+ reply.reply+'</th>'
+	 +'<td>'+ reply.replyer+'</td>'
+	 +'<td>'+ reply.replyDate+'</td>'
+	 +'<td>'+ reply.visitcount+'</td>'
+	 +'</tr>'                                        
+	}); 
+	replyBlock += ''
+		 +'</tbody>'
+		+'</table>';
+	replyDiv.innerHTML += replyBlock;
+	
 	
 	let pageBlock='';
 	//페이지 블럭 생성
 	pageBlock += '<nav aria-label="...">'
-		  +'<ul class="pagination justify-content-left">';
+		  +'<ul class="pagination justify-content-center">';
 		  
 		  if(pageDto.prev){
 			  pageBlock += '<li class="page-item" onclick="getPage('+ (pageDto.startNo-1) +')">'
@@ -178,34 +207,20 @@ function replayDelete(rno){
 			alert(map.message);
 	}
 	}
-/*	
-	function fetchGet(url, callback){
-			fetch(url)
-			// response.json() : 요청결과를 js object 형식으로 반환 // 객체로 파싱
-			.then(response => response.json())
-			// 반환받은 오브젝트 이용하여 화면에 출력
-			.then(map => callback(map));
-		
-	}
-	function fetchPost(url, obj, callback){
-		fetch(url,
-				,{method:'post'
-				, headers : {'Content-Type' : 'application/json'}
-				, body : replyJson})
-		// 4. 응답처리	
-		.then(response => response.json())
-			.then(map => callback(map));
-	}
-	*/
-</script>
-</head>
+	
+
+	
+</script></head>
 <body>
-<h3>댓글달기</h2>
+<h3>댓글달기</h3>
 <input type="hidden" name="bno" id="bno" value="50">  
 <input type="hidden" name="page" id="page" value="1">  
+
 <div class="input-group mb-3">
 	<input type="text" id="reply" class="form-control" placeholder="댓글" aria-label="Recipient's username" aria-describedby="basic-addon2">
 	<input type="text" id="replyer" class="form-control" placeholder="작성자" aria-label="Recipient's username" aria-describedby="basic-addon2">
+	  <input type="file" class="form-control" id="inputGroupFile02">
+	  <label class="input-group-text" for="inputGroupFile02">파일첨부</label>
   <span class="input-group-text" id="btnWrite">댓글작성</span>
 </div>
 <div id="replyDiv" ></div>

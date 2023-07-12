@@ -69,6 +69,10 @@ window.onload=function(){
     <label for="writer" class="form-label">작성자</label>
     <input type="text" name="writer" id="writer" class="form-control" value="${board.writer }">
 	</div>
+	  <div class="mb-3">
+    <label for="writer" class="form-label">첨부파일</label><br>
+   	<input type="file" name="files">
+	</div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 	<c:if test="${not empty board.bno }" var="res">
  	 <input type="text" name="bno" value="${board.bno }" >	

@@ -4,7 +4,10 @@
   
   <mapper namespace="com.jia.mapper.ReplyMapper">
   	<select id="getList" resultType="com.jia.vo.ReplyVO">
-  		select * from(select t.*, rownum rn from(select rno, bno, reply, replyer, replyDate, updateDate 
+  		select * from(select t.*, rownum rn from(select rno, bno, reply, replyer, 
+  		decode(trunc(replyDate), trunc(sysdate), to_char(replyDate,'hh24:mi:ss'), to_char(replyDate, 'yy/MM/dd')) replyDate, 
+  		decode(trunc(updateDate), trunc(sysdate), to_char(replyDate,'hh24:mi:ss'), to_char(updateDate, 'yy/MM/dd')) updateDate, 
+  		visitcount 
   		from tbl_reply 
   		where bno=#{bno}
   		order by rno desc) t ) where rn between #{cri.startNo} and #{cri.endNo} order by rn

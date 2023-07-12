@@ -8,8 +8,8 @@
 </head>
 <script type="text/javascript">
 
-let msg = ${msg};
-window.onload=function(){
+let msg = '${msg}';
+window.addEventListener('load',function(){
 	if(msg!=""){
 		document.querySelector(".modal-body").innerHTML = msg;
 		document.querySelector("$btnModalSave").style.display = 'none';
@@ -20,7 +20,7 @@ window.onload=function(){
 		});
 
 	myModal.show();
-}
+})
 </script>
 
 <body>

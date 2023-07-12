@@ -66,15 +66,23 @@
       }
     </style>
 
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+
+<body>
 <script>
 function requestAction(url,bno){
 	searchForm.action=url;
 	searchForm.bno.value=bno;
 	searchForm.submit();
 }
+
+$("#datepicker").datepicker();
 </script>
-</head>
-<body>
+
 <%@include file="../common/header.jsp" %>
 <main class="container">
   <div class="bg-light p-5 rounded">
@@ -83,6 +91,17 @@ function requestAction(url,bno){
     <a class="btn btn-lg btn-primary" href="/board/write" role="button">글쓰기 &raquo;</a>
   </div>
     <div><%@include file="../common/searchForm.jsp" %></div>
+    <form class="row g-3 align-items-center" name="searchForm">		
+	<fieldset>
+	<span class="bunch">
+	<input type="hidden" name="lbrry_seq_no" value="">
+	<label for="dateFrom">작성일</label>
+	<input type="text" id="datepicker" title="조회시작 작성일" name="datepicker" value="" size="7" maxlength="8"> ~
+	<input type="text" id="dateTo" title="조회종료 작성일" name="dateTo" value="" size="7" maxlength="8">
+	</span>
+	<input type="submit" class="btnType8" title="검색" value="검색">
+	</fieldset>
+	</form>
     <br>
 
 

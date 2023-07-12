@@ -34,6 +34,11 @@ public class BoardController {
 	public String test() {
 		return "/reply/test";
 	}
+	
+	@GetMapping("datepicker")
+	public String datapicker() {
+		return "/board/datepicker";
+	}
 //	public String test(ReplyVO vo) {
 //		replyService.insert(vo);
 //		return "/reply/test";
