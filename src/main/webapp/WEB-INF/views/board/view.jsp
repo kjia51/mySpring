@@ -76,10 +76,12 @@ window.addEventListener('load',function(){
   <p></p>
   <div class="list-group w-auto">
   <form method="get" action="" name="viewForm">
-  <input type="hidden" name="bno" id="bno" value="${board.bno }">  
+  
+  <input type="text" name="bno" id="bno" value="${board.bno }">  
   <input type="text" name="pageNo" id="pageNo" value="${param.pageNo }">  
-  <input type="hidden" name="searchField" value="${param.searchField }">  
-  <input type="hidden" name="searchWord" value="${param.searchWord }">  
+  <input type="text" name="searchField" value="${param.searchField }">  
+  <input type="text" name="searchWord" value="${param.searchWord }">  
+  
   <div class="mb-3 " >
     <label for="title" class="form-label">제목</label>
     <input type="text" name="title" id="title" class="form-control" readonly value="${board.title }" >

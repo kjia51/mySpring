@@ -29,9 +29,20 @@ function fetchPost(url, obj, callback){
 }
 
 // 댓글 조회 및 출력
-function getReplyList(){
+function getReplyList(page){
+	
+	/**
+	 * falsy : false, 0, "", NaN, undefined, null
+	 * 
+	 * falsy 한값 이외의 값이 들어있으면 true를 반환
+	 */
+	if(!page){
+		page = 1;
+	}
+	page = document.querySelector('#pageNo').value;
+	
+	
 	let bno = document.querySelector('#bno').value;
-	let page = document.querySelector('#pageNo').value;
 	console.log('bno');
 	console.log('/reply/list/'+bno+'/'+page);
 	console.log(`/reply/list/${bno}/${page}`);
@@ -69,9 +80,7 @@ function replyView(map){
 	 +'<table class="table text-break text-center">'
 	 +'	 <colgroup>              '
 	 +'	 <col style="width:8%">  '
-	 +'	 <col style="width:20%"> '
-	 +'	 <col style="width:15%"> '
-	 +'	 <col style="width:20%"> '
+	 +'	 <col style="width:30%"> '
 	 +'	 <col style="width:10%"> '
 	 +'	 <col style="width:10%"> '
 	 +'	 </colgroup>'
@@ -81,8 +90,6 @@ function replyView(map){
 	 +'<th scope="col">댓글내용</th>'
 	 +'<th scope="col">작성자</th>'
 	 +'<th scope="col">작성일</th>'
-	 +'<th scope="col">조회수</th>'
-	 +'<th scope="col">첨부</th>'
 	 +'</tr>'
 	 +'</thead>'
 	 +'<tbody>';
@@ -91,15 +98,13 @@ function replyView(map){
 	 +'<tr id="tr'+reply.rno+'" data-value= "'+ reply.reply+'">'
 	 +'<td>'+reply.rno+'</td>'
 	 +'<th scope="row" class="text-start">'
-	    + '			<p><a href="#">' + reply.reply + '</a>'
-	    + ' 			<i class="fa-regular fa-pen-to-square" onclick="replyEdit('+reply.rno+')"></i>'
+	    + '			<p><a href="#"  onclick="replyDView('+reply.rno+')">' + reply.reply + '</a></p>'
+	    + ' 			<p><i class="fa-regular fa-pen-to-square" onclick="replyEdit('+reply.rno+')"></i>'
 	    + ' 			<i class="fa-regular fa-trash-can" onclick="replyDelete('+reply.rno+')"></i>'
 	    + '			</p>'
 	    +'</th>'
 	    +'<td>'+ reply.replyer+'</td>'
 	 +'<td>'+ reply.updateDate+'</td>'
-	 +'<td>'+ reply.visitcount+'</td>'
-	 +'<td></td>'
 	 +'</tr>'                                        
 	}); 
 	replyBlock += ''
@@ -113,7 +118,7 @@ function replyView(map){
 		  +'<ul class="pagination justify-content-center">';
 		  
 		  if(pageDto.prev){
-			  pageBlock += '<li class="page-item" onclick="getPage('+ (pageDto.startNo-1) +')">'
+			  pageBlock += '<li class="page-item" onclick="getReplyList('+ (pageDto.startNo-1) +')">'
 			      +'<a class="page-link">Previous</a>'
 				    +'</li>';
 		  };
@@ -121,12 +126,12 @@ function replyView(map){
    
  	 for(i=pageDto.startNo; i<=pageDto.endNo; i++){
  		 	let activeStr = (pageDto.cri.pageNo==i)?'active':'';
- 		 	pageBlock += '<li class="page-item bg-white text-dark'+activeStr+'" onclick="getPage('+i+')">'
+ 		 	pageBlock += '<li class="page-item bg-white text-dark'+activeStr+'" onclick="getReplyList('+i+')">'
     		+'<a class="page-link bg-white text-dark" href="#">'+i+'</a></li>';		    	
 		    } 
  	if(pageDto.next){
- 		pageBlock += '<li class="page-item" onclick="getPage('+ (pageDto.endNo+1) +')">'
-		      +'<a class="page-link" href="#">Next</a>'
+ 		pageBlock += '<li class="page-item" onclick="getReplyList('+ (pageDto.endNo+1) +')">'
+		      +'<a class="page-link" href="#" >Next</a>'
 		    +'</li>';
  	}
  	pageBlock += '</ul>'
@@ -195,6 +200,30 @@ function replyEdit(rno){
 //		   +  '</div>'
 //		   +  '</div>'
 // 		   + '</td>';
+}
+function replyDView(rno){
+	console.log('rno :'+rno );
+	let tr = document.querySelector('#tr'+rno);
+	tr.innerHTML= ''
+		   +'<td colspan="6">'
+      +'<div class="accordion" id="accordionExample">'
+      + ' <div class="accordion-item">'
+	   +  '  <h2 class="accordion-header" id="headingOne">'
+	   +   '   <button class="accordion-button bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
+	   +    ' 수정 중...'
+	   +     ' </button>'
+	   +    '</h2>'
+	   +    '<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">'
+      + '<div class="accordion-body input-group mb-3">'
+      +'<input type="text" class="form-control" placeholder="Recipients username" aria-label="Recipients username" aria-describedby="basic-addon2">' 
+	   +'<span class="input-group-text" id="btnWrite" >수정하기</span>'
+	   +'</div>'
+	   +    '</div>'
+	   +  '</div>'
+	   +  '</div>'
+	   + '</td>';
+	
+	
 }
 
 

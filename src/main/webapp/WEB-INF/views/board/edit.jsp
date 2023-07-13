@@ -30,7 +30,10 @@
 <h3>게시판 수정화면</h1>
   <div class="list-group w-auto">
   <form method="get" action="" name="viewForm">
+  
   <input type="hidden" name="bno" value="${board.bno }">  
+  
+  
   <div class="mb-3">
     <label for="title" class="form-label">제목</label>
     <input type="text" name="title" id="title" class="form-control"  value="${board.title }" >

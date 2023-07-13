@@ -9,7 +9,7 @@
 <body>
 
 
-<form class="row g-3 align-items-center" action="/board/list" method="get" name="searchForm">
+<form class="row g-3 align-items-center" action="/board/list" method="get" name="searchForm1">
 
 	<input type="hidden" name="bno" value="">
 	<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">

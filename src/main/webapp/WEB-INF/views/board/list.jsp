@@ -79,16 +79,23 @@ function requestAction(url,bno){
 	searchForm.bno.value=bno;
 	searchForm.submit();
 }
-
-$("#datepicker").datepicker();
+	window.addEventListener('load', function(){
+		btnList.addEventListener('click', function(){
+			viewForm.action = "/board/list";
+			viewForm.method = "get";
+			viewForm.submit();
+		});
+	})
 </script>
 
 <%@include file="../common/header.jsp" %>
+
+${userId }
 <main class="container">
   <div class="bg-light p-5 rounded">
     <h1>게시판 만들기</h1>
     <p class="lead">부트스트랩을 이용한 게시판 만들기</p>
-    <a class="btn btn-lg btn-primary" href="/board/write" role="button">글쓰기 &raquo;</a>
+    <a class="btn btn-lg btn-primary" href="/board/write" id="btnList" role="button">글쓰기 &raquo;</a>
   </div>
     <div><%@include file="../common/searchForm.jsp" %></div>
     <form class="row g-3 align-items-center" name="searchForm">		
@@ -96,8 +103,14 @@ $("#datepicker").datepicker();
 	<span class="bunch">
 	<input type="hidden" name="lbrry_seq_no" value="">
 	<label for="dateFrom">작성일</label>
-	<input type="text" id="datepicker" title="조회시작 작성일" name="datepicker" value="" size="7" maxlength="8"> ~
-	<input type="text" id="dateTo" title="조회종료 작성일" name="dateTo" value="" size="7" maxlength="8">
+	<input type="text" id="dateStart" title="조회시작 작성일" name="dateStart" value="" size="7" maxlength="8"> ~
+	<script>
+        $("#dateStart").datepicker();
+    </script>
+	<input type="text" id="dateEnd" title="조회종료 작성일" name="dateEnd" value="" size="7" maxlength="8">
+	<script>
+        $("#dateEnd").datepicker();
+    </script>
 	</span>
 	<input type="submit" class="btnType8" title="검색" value="검색">
 	</fieldset>

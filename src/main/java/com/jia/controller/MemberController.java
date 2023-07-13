@@ -1,17 +1,24 @@
 package com.jia.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jia.service.MemberService;
-import com.jia.vo.Member;
+import com.jia.vo.MemberVO;
+
 
 //관리되는 컨트롤러가 되기 위해선 servlet-context.xml에 들어가서 component-scan 수정
 @Controller
-public class MemberController {
+public class MemberController extends CommonRestController {
 	
 	@Autowired
 	MemberService service;
@@ -29,21 +36,22 @@ public class MemberController {
 	
 	
 	@PostMapping("/loginAction")
-	public String loginAction(Member member, Model model) {
-		System.out.println("id :"+member.getId());
-		System.out.println("pw : "+member.getPw());
+	public @ResponseBody Map<String, Object> loginAction(@RequestBody MemberVO member 
+															, Model model, HttpSession session) {
+		System.out.println(member.getId());
+		System.out.println(member.getPw());
 		
+		member = service.login(member);
 		
-		service.login(member, model);
-		if(member!=null && !"".equals(member)) {
-			if("admin".equalsIgnoreCase(member.getId())) {
-				System.out.println("board/list");
-				return "/board/list";
-			}
-			return "user";			
+		if(member!=null) {
+			session.setAttribute("member", member);
+			session.setAttribute("userId", member.getId());
+			return responseMap(1, "로그인");
+		} else {
+			return responseMap(0,"실패");
 		}
 
-		return "main";
+		
 	}
 	
 }

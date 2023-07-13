@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	function go(page){
-		searchForm.pageNo.value=page;
-		searchForm.submit();
+		searchForm1.pageNo.value=page;
+		searchForm1.submit();
 	}
 </script>
 </head>

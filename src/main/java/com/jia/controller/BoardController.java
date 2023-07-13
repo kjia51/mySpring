@@ -30,6 +30,8 @@ public class BoardController {
 	@Autowired
 	ReplyService replyService;
 	
+
+	
 	@GetMapping("/reply/test")
 	public String test() {
 		return "/reply/test";
@@ -59,8 +61,9 @@ public class BoardController {
 	
 	@GetMapping("login")
 	public String login() {
-		return "/login";
+		return "/board/login";
 	}
+	
 	@Autowired
 	BoardService boardService;
 	
@@ -152,12 +155,26 @@ public class BoardController {
 		return "/board/edit";
 	}	
 	@GetMapping("editAction")
-	public String editAction(BoardVO board, RedirectAttributes redirect, Model model) {
+	public String editAction(BoardVO board, Criteria cri, RedirectAttributes redirect, Model model) {
+		
+		//?pageNo=1 
+		//=> request.getParam
+		
+		//request 내장객체에 저장
+		//request.setAttr(""), session.setAttr("")
+		//request.getAttr("")
+		
 		//수정
 		int res = boardService.update(board);
 		if(res>0) { 
+			
 			// redirect 시 request 영역이 공유되지 않으므로 RedirectAttributes 사용
 			redirect.addFlashAttribute("msg","수정 완료");
+			
+			// ?~~ 
+			redirect.addAttribute("pageNo", cri.getPageNo());
+			redirect.addAttribute("searchField", cri.getSearchField());
+			redirect.addAttribute("searchWord", cri.getSearchWord());
 			//상세페이지로 이동
 			return "redirect:/board/view?bno="+board.getBno();			
 		} else {			
