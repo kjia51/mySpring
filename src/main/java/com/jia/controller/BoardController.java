@@ -82,6 +82,7 @@ public class BoardController {
 		log.info("list : " + list);
 		log.info("==============================");
 //		model.addAttribute("list",list);
+			
 			return null;
 		
 	}

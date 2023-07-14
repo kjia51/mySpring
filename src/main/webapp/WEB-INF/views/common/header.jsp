@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://kit.fontawesome.com/ba30180671.js" crossorigin="anonymous"></script>
 </head>
 <script type="text/javascript">
 
 let msg = '${msg}';
 window.addEventListener('load',function(){
-	if(msg!=""){
+	if(msg!=''){
 		document.querySelector(".modal-body").innerHTML = msg;
-		document.querySelector("$btnModalSave").style.display = 'none';
+		document.querySelector(".btnModalSave").style.display = 'none';
+		const myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+			  keyboard: false
+			});
+		myModal.show();
+	
 		
 	}
-	const myModal = new bootstrap.Modal('#myModal', {
-		  keyboard: false
-		});
-
-	myModal.show();
 })
 </script>
 
@@ -35,12 +37,16 @@ window.addEventListener('load',function(){
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
+		<c:if test="${empty userId}" var="res">
+	        <li class="nav-item">
+	          <a class="nav-link active" href="/login">Login</a>
+	        </li>
+		</c:if>
+		<c:if test="${not res}">
+	        <li class="nav-item">
+	          <a class="nav-link active" href="/logout">Logout</a>
+	        </li>
+        </c:if>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -58,9 +64,7 @@ window.addEventListener('load',function(){
         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-
-      </div>
+      <div class="modal-body"></div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
         <button type="button" class="btnModalSave">저장</button>

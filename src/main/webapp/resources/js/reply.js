@@ -234,6 +234,7 @@ function replyEditAction(rno){
 	let obj = {rno:rno, reply:reply};
 	fetchPost('/reply/editAction/', obj, replyRes);
 }
+
 function getPage(page){
 	document.querySelector("#pageNo").value =page;
 	getReplyList();

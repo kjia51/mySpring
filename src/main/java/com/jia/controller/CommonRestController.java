@@ -12,6 +12,8 @@ public class CommonRestController {
 	private final String REST_EDIT = "수정";
 	private final String REST_DELETE = "삭제";
 	private final String REST_SELECT = "조회";
+	protected final String REST_SUCCESS = "success";
+	protected final String REST_FAIL= "fail";
 	
 	/**
 	 * 입력, 수정, 삭제의 경우 int 값을 반환합니다.
@@ -27,6 +29,17 @@ public class CommonRestController {
 			map.put("result", "fail");
 			map.put("msg", msg + "중 예외가 발생하였습니다.");
 		}
+		
+		return map;
+	}
+	
+	//메소드 오버로딩
+	public Map<String, Object> responseMap(String res, String msg){
+		Map<String, Object> map = new HashMap<String, Object>();
+
+			map.put("result", res);
+			map.put("msg", msg);
+
 		
 		return map;
 	}

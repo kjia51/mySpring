@@ -90,7 +90,7 @@ function requestAction(url,bno){
 
 <%@include file="../common/header.jsp" %>
 
-${userId }
+
 <main class="container">
   <div class="bg-light p-5 rounded">
     <h1>게시판 만들기</h1>

@@ -14,7 +14,7 @@
   	</select>
   	
   	<insert id="insert">
-  		insert into tbl_reply(rno, bno, reply, replyer, replyDate) values(seq_reply.nextval, #{bno}, #{reply}, #{replyer}, sysdate)
+  		insert into tbl_reply values(seq_reply.nextval, #{bno}, #{reply}, #{replyer}, sysdate, sysdate, 0)
   	</insert>
   	
   	<delete id="delete">

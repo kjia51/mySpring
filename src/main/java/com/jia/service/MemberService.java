@@ -9,8 +9,13 @@ public interface MemberService {
 	//객체 생성대신 주입시키는 방법
 
 	public MemberVO login(MemberVO member);
-//	@Autowired
-//	MemberDao dao;
+
+	public int insert(MemberVO member);
+	
+	public int idCheck(MemberVO member);
+	
+	
+	
 //	public Member login(Member paramMember, Model model) {
 //		Member member = dao.login(paramMember);
 //		if(member == null){
