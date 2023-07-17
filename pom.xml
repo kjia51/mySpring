@@ -11,8 +11,8 @@
 	<!-- 자바버전 변경 -->
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.aspectj-version>1.9.0</org.aspectj-version>
+		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
 	<dependencies>
 	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
@@ -189,11 +189,15 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>	
+		
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+
+		
 		
 		<!-- 쿼리 실행결과 출력 log4jdbc.log4j2 -->
 		<dependency>
@@ -222,6 +226,19 @@
 		    <version>1.5</version>
 		</dependency>
 		
+		<!-- Aop 관점 지향 프로그래밍 AspectJ -->
+		    <dependency>
+		      <groupId>org.aspectj</groupId>
+		      <artifactId>aspectjrt</artifactId>
+		      <version>${org.aspectj-version}</version>
+		    </dependency>
+		 
+		    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		    <dependency>
+		      <groupId>org.aspectj</groupId>
+		      <artifactId>aspectjweaver</artifactId>
+		      <version>${org.aspectj-version}</version>
+		    </dependency>
 
 
 		

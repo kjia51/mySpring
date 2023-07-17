@@ -125,7 +125,7 @@
 		if(map.result=='success'){
 			// 로그인 성공 -> 리스트로 이동
 			console.log('success');
-				location.href="/board/list";
+				location.href=map.url;
 			} else{
 			// 로그인 실패 -> 메세지 처리
 			console.log('fail');

@@ -40,29 +40,30 @@ public class ReplyController extends CommonRestController{
 	 *	/reply/list/83
 	 * @return
 	 */
-//	@GetMapping("/reply/list/{bno}/{page}")
-//	public Map<String, Object> getList(@PathVariable("bno") int bno, @PathVariable("page") int page){
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		
-//		log.info("bno : " + bno);
-//		log.info("page : " + page);
-//
-//		Criteria cri = new Criteria();
-//		cri.setPageNo(page);
-//		
-//		//페이지 처리(시작~끝)
-//		List<ReplyVO> list = service.getList(bno, cri);
-//		int total = service.total(bno);
-//		
-//		//페이지 블럭을 생성
-//		PageDto pageDto = new PageDto(cri, total);
-//		
-//		map.put("list", list);
-//		map.put("pageDto", pageDto);
-//		
-//		
-//		return responseListMap(list, pageDto);
-//	}
+	@GetMapping("/reply/list/{bno}/{page}")
+	public Map<String, Object> getList(@PathVariable("bno") int bno, @PathVariable("page") int page){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		log.info("bno : " + bno);
+		log.info("page : " + page);
+
+		Criteria cri = new Criteria();
+		cri.setPageNo(page);
+		
+		//페이지 처리(시작~끝)
+		List<ReplyVO> list = service.getList(bno, cri);
+		int total = service.total(bno);
+		
+		//페이지 블럭을 생성
+		PageDto pageDto = new PageDto(cri, total);
+		
+		map.put("list", list);
+		map.put("pageDto", pageDto);
+		
+		
+		return responseListMap(list, pageDto);
+	}
+	
 	
 	@GetMapping("/reply/delete/{rno}")
 	public Map<String, Object> delete(@PathVariable("rno") int rno){

@@ -98,6 +98,12 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.count(bno);
 	}
 
+	@Override
+	public int updateReplyCnt(int bno, int amount) {
+		// TODO Auto-generated method stub
+		return boardMapper.updateReplyCnt(bno, amount);
+	}
+
 
 
 

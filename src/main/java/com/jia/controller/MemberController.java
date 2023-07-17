@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jia.service.MemberService;
-import com.jia.vo.Member;
 import com.jia.vo.MemberVO;
 
 
@@ -53,7 +52,19 @@ public class MemberController extends CommonRestController {
 		if(member!=null) {
 			session.setAttribute("member", member);
 			session.setAttribute("userId", member.getId());
-			return responseMap(REST_SUCCESS, "로그인 되었습니다.");
+			session.setAttribute("userName", member.getName());		
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
+
+			if(member.getRole()!=null && member.getRole().contains("ADMIN_ROLE")) {
+				// 관리자 로그인 - > 관리자 페이지로 이동
+				map.put("url", "/admin");
+			}
+			
+			map.put("url", "/board/list");
+			
+			return map;
+//			return responseMap(REST_SUCCESS, "로그인 되었습니다.");
 		} else {
 			return responseMap(REST_FAIL,"아이디와 비밀번호를 확인해주세요");
 		}

@@ -16,4 +16,5 @@ public interface ReplyService {
 	
 	public int total(int bno);
 	
+
 }

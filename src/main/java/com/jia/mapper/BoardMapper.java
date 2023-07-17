@@ -3,6 +3,7 @@ package com.jia.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 
 import com.jia.vo.BoardVO;
 import com.jia.vo.Criteria;
@@ -29,4 +30,7 @@ public interface BoardMapper {
 	
 	public int count(int bno);
 	
+	// 파라메터 두개 이상일때는 @param 처리를 해주어야함 !!
+
+	public int updateReplyCnt(@Param("bno") int bno, @Param("amount") int amount);
 }

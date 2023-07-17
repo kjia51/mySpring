@@ -1,0 +1,7 @@
+create table tbl_log(
+    classname varchar2(100),
+    methodname varchar2(100),
+    params varchar2(1000),
+    errmsg varchar2(2000),
+    regdate date
+);

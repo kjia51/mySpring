@@ -28,5 +28,8 @@
   	<select id="total" resultType="int" >
   		select count(*) from tbl_reply where bno=#{bno}
   	</select>
-  
+  	
+   <select id="getOne" resultType="com.jia.vo.ReplyVO" >
+  		select * from tbl_reply where rno=#{rno}
+  	</select>
   </mapper>

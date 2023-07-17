@@ -27,6 +27,12 @@ public class boardTest {
 
 	@Autowired
 	BoardMapper boardMapper;
+	
+	@Test
+	public void updateReplyCntTest() {
+		int res = boardMapper.updateReplyCnt(50, 1);
+		assertEquals(1, res);
+		}
 //	@Test
 //	public void getList() {
 //		assertNotNull(boardMapper);

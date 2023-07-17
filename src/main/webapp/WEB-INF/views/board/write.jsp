@@ -67,7 +67,7 @@ window.onload=function(){
   </div>
   <div class="mb-3">
     <label for="writer" class="form-label">작성자</label>
-    <input type="text" name="writer" id="writer" class="form-control" value="${board.writer }">
+    <input type="text" name="writer" id="writer" class="form-control" value="${userName }">
 	</div>
 	  <div class="mb-3">
     <label for="writer" class="form-label">첨부파일</label><br>

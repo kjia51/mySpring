@@ -27,6 +27,7 @@ public class MemberServiceImpl implements MemberService{
 			
 			// 비밀번호 인증이 성공하면 member객체를 반환
 			if(res) {
+				member.setRole(memberMapper.getMemberRole(member.getId()));;
 				return member;
 			}
 		}

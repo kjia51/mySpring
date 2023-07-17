@@ -100,8 +100,8 @@ function replyView(map){
 	 +'<th scope="row" class="text-start">'
 	    + '			<p><a href="#"  onclick="replyDView('+reply.rno+')">' + reply.reply + '</a></p>'
 	    + ' 			<p><i class="fa-regular fa-pen-to-square" onclick="replyEdit('+reply.rno+')"></i>'
-	    + ' 			<i class="fa-regular fa-trash-can" onclick="replyDelete('+reply.rno+')"></i>'
-	    + '			</p>'
+	    + ' 			<i class="fa-regular fa-trash-can" onclick="replyDelete('+reply.rno+')"></i></p>'
+
 	    +'</th>'
 	    +'<td>'+ reply.replyer+'</td>'
 	 +'<td>'+ reply.updateDate+'</td>'

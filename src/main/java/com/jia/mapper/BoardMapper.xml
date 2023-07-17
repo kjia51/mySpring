@@ -87,6 +87,9 @@
 			<when test="searchField == 'writer'">
 				and writer like '%'||#{searchWord}||'%'
 			</when>
+			<when test="searchField == 'bno'">
+				and bno like '%'||#{searchWord}||'%'
+			</when>
 		</choose>
 	</sql>
 	
@@ -94,6 +97,8 @@
 	 update tbl_board set visitcount = visitcount + 1 where bno = #{bno} 
 	 </update>
 	
-
+	  <update id="updateReplyCnt">
+	    update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
+	  </update>
 
 </mapper>

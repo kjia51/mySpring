@@ -70,6 +70,8 @@ window.addEventListener('load',function(){
 </script>
 
 <main class="container">
+${userId }
+${userName }
   <div class="bg-light p-5 rounded">
     <h1>게시판 상세화면</h1>
     <p class="lead">부트스트랩을 이용한 게시판 만들기</p>
@@ -108,7 +110,7 @@ window.addEventListener('load',function(){
 <div class="input-group">
   <span class="input-group-text">답글작성</span>
   <input type="text" aria-label="First name" class="form-control" id="reply">
-  <input type="hidden" aria-label="First name" class="form-control" id="replyer" value="작성자">
+  <input type="hidden" aria-label="First name" class="form-control" id="replyer" value="${userId }">
   <input type="text" id="btnReplyWrite" aria-label="Last name" class="input-group-text"  value="등록하기">
 </div>
 

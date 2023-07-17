@@ -1,6 +1,6 @@
 package com.jia.member;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class MemberTest {
 	@Test
 	public void Inserttest() {
 		MemberVO member = new MemberVO();
-		member.setId("admin00");
+		member.setId("admin01");
 		member.setPw("1234");
 		member.setName("이름");
 		int res = memberMapper.insert(member);
@@ -44,6 +44,12 @@ public class MemberTest {
 		int res = memberMapper.idCheck(member);
 		
 		System.out.println("결과 : "+ res);
+	}
+	
+	@Test
+	public void testGetMemberRole() {
+		List<String> list = memberMapper.getMemberRole("admin");
+		System.out.println("관리자 권한 : "+list.contains("ADMIN_ROLE"));
 	}
 	
 	

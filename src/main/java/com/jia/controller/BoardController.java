@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,7 +76,11 @@ public class BoardController {
 	 */
 	
 	@GetMapping("list")
-	public List<BoardVO> getList(Criteria cri, Model model) {
+	public void getList(Criteria cri, Model model) {
+		
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		
 		List<BoardVO> list = boardService.getListXml(cri, model);
 		log.info("cri : "+ cri);
 		log.info("==============================");
@@ -83,7 +88,8 @@ public class BoardController {
 		log.info("==============================");
 //		model.addAttribute("list",list);
 			
-			return null;
+		stopWatch.stop();
+		log.info("수행시간 : "+ stopWatch.getTotalTimeMillis()+"(ms)초");
 		
 	}
 
