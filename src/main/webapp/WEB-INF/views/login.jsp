@@ -263,7 +263,8 @@
         <input type="checkbox" value="remember-me"> Remember me
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit" id='btnLogin'>로그인</button>
+    <button class="btn btn-lg btn-primary" style="width: 150px; height:40px;" type="submit" id='btnLogin'>로그인</button>
+    <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=12058067f10f2a5ed33132f900363ed0&redirect_uri=http://localhost:8080/login"><img src="../resources/img/login.png" width=150px height=40px"> </a>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
   </form>
   

@@ -30,8 +30,8 @@ public class MemberController extends CommonRestController {
 	
 	//로그인 요청이 오면 로그인 페이지를 반환 
 	@GetMapping("login")
-	public String login() {
-		return "login";
+	public @ResponseBody String login(String code) {
+		return "카카오 서버로부터 받은 code 정보 : " + code;
 	}
 	
 	@GetMapping("logout")
