@@ -64,10 +64,36 @@ public class LogAdvice {
 	 * Around 
 	 * 타켓의 메소드가 호출되기 이전 시점과 이후 시점에 모두 처리해야할 필요가 있는 부가 기능 정의
 	 * 주업무로직을 실행하기 위해 JoinPoint의 하위 클래스인 proceedingJoinPoint 타입의 마라미터를 필수적으로 선언해야함 
+	 * ProceedingJoinPoint타입의 파라미터를 필수적으로 선언해야함
+	 * 타켓메서드를 실행결과로 반환하기 위해
 	 * @return
 	 */
 	
-
+	//around의 주의점 : 타켓을 직접 실행해야함
+//	@Around("execution(* com.momo.service.Board*.*(..))")
+//	public Object logTime(ProceedingJoinPoint pjp) {
+//
+//		StopWatch stopWatch = new StopWatch();
+//		stopWatch.start();
+//		
+//		Object res = "";
+//		// 주 업무로직 실행(타겟 메서드의 실행시점을 정할수 있다)
+//		try {
+//			res = pjp.proceed();
+//		} catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		stopWatch.stop();
+//		log.info("=================");
+//		log.info(pjp.getTarget().getClass().getName() +"."+ pjp.getSignature().getName());
+//		log.info("수행시간 : " + stopWatch.getTotalTimeMillis() +"(ms)초");
+//		log.info("=================");
+//		return res;
+//		
+//	}
+	
 	
 	@Autowired
 	LogService logService;
@@ -78,6 +104,9 @@ public class LogAdvice {
 	 * @param joinPoint
 	 * @param exception
 	 */
+	
+	//타겟에서 예외발생 시 
+	// 접근제한자/ 클래스경로 및 클래스이름/ 메서드 이름/ 매개변수 순서..
 	@AfterThrowing(pointcut="execution(* com.jia.service.*.*(..))", throwing="exception")
 	public void logException(JoinPoint joinPoint, Exception exception) {
 		// 예외가 발생 시 예외 내용을 테이블에 저장합니다

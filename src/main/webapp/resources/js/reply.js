@@ -55,6 +55,7 @@ function getReplyList(page){
 function replyView(map){
 	let list = map.list;
 	let pageDto = map.pageDto;
+
 	console.log(list);
 	// div 초기화
 	replyDiv.innerHTML=''
@@ -99,9 +100,11 @@ function replyView(map){
 	 +'<td>'+reply.rno+'</td>'
 	 +'<th scope="row" class="text-start">'
 	    + '			<p><a href="#"  onclick="replyDView('+reply.rno+')">' + reply.reply + '</a></p>'
+	    + '				<c:set var="userId" value="admin" />'
+	    + '				<c:if test="${userId eq '+reply.replyer+'}"'
 	    + ' 			<p><i class="fa-regular fa-pen-to-square" onclick="replyEdit('+reply.rno+')"></i>'
 	    + ' 			<i class="fa-regular fa-trash-can" onclick="replyDelete('+reply.rno+')"></i></p>'
-
+	    + '				</c:if>'
 	    +'</th>'
 	    +'<td>'+ reply.replyer+'</td>'
 	 +'<td>'+ reply.updateDate+'</td>'

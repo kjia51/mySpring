@@ -9,6 +9,7 @@
 <body>
 <h2>파일업로드</h2>
 	메시지 : ${message }
+	<!--  파일 전송할 때 타입 : multipart/form-data -->
 	<form action="/fileupload" method="post" enctype="multipart/form-data">
 		파일선택 <br>
 		<input type="file" name="files"><br>

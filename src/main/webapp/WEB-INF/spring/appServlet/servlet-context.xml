@@ -30,12 +30,13 @@
 		<!-- 로그인 체크 -->
 		<interceptor>
 			<mapping path="/board/*"/>
-			<exclude-mapping path=""/>
+			<exclude-mapping path="/board/login"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		
 		<!-- 관리자 체크 -->
 		<interceptor>
+		<!-- ** : 나의 하위경로를 포함하겠다 -->
 			<mapping path="/admin**"/>
 			<exclude-mapping path=""/>
 			<beans:ref bean="adminInterceptor"/>

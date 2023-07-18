@@ -31,7 +31,11 @@ public class BoardController {
 	@Autowired
 	ReplyService replyService;
 	
-
+	@GetMapping("/main")
+	public String main() {
+		return "/board/main";
+	}
+	
 	
 	@GetMapping("/reply/test")
 	public String test() {

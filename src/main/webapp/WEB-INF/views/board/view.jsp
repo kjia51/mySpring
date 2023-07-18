@@ -70,7 +70,8 @@ window.addEventListener('load',function(){
 </script>
 
 <main class="container">
-${userId }
+  <input type="text" name="userId" value="${userId }" }>
+
 ${userName }
   <div class="bg-light p-5 rounded">
     <h1>게시판 상세화면</h1>
@@ -80,7 +81,6 @@ ${userName }
   <p></p>
   <div class="list-group w-auto">
   <form method="get" action="" name="viewForm">
-  
   <input type="text" name="bno" id="bno" value="${board.bno }">  
   <input type="text" name="pageNo" id="pageNo" value="${param.pageNo }">  
   <input type="text" name="searchField" value="${param.searchField }">  
