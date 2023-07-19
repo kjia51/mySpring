@@ -146,9 +146,20 @@
 		}
 			signupMsg.innerHTML = map.msg;
 	}
+	
+	
+	//function kakaologin(){
+		//window.open(
+		//"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=12058067f10f2a5ed33132f900363ed0&redirect_uri=http://localhost:8080/login",
+        //"카카오로그인창",
+        //"width=500,height=500,left=250,top=250"
+		//)
+		
+	}
+
 </script>
 
-
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="../resources/js/common.js"></script>
 <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">

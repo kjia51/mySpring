@@ -1,5 +1,6 @@
 package com.jia.controller;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,14 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jia.service.MemberService;
 import com.jia.vo.MemberVO;
 
+import lombok.RequiredArgsConstructor;
+
 
 //관리되는 컨트롤러가 되기 위해선 servlet-context.xml에 들어가서 component-scan 수정
 @Controller
+
 public class MemberController extends CommonRestController {
 	
 	@Autowired
@@ -27,11 +32,11 @@ public class MemberController extends CommonRestController {
 	 * 로그인 페이지 이동
 	 * @return
 	 */
+
 	
-	//로그인 요청이 오면 로그인 페이지를 반환 
-	@GetMapping("login")
-	public @ResponseBody String login(String code) {
-		return "카카오 서버로부터 받은 code 정보 : " + code;
+	@GetMapping("/login")
+	public void login() {
+		
 	}
 	
 	@GetMapping("logout")

@@ -26,7 +26,7 @@ import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @Log4j
-public class FileuploadController {
+public class FileuploadController extends CommonRestController{
 	
 	/**
 	 * 메서드의 리턴타입
@@ -63,6 +63,72 @@ public class FileuploadController {
 	@PostMapping("/file/fileuploadAction")
 	public String fileuploadAction(List<MultipartFile> files, int bno, RedirectAttributes rttr) {
 		
+		int insertRes=fileupload(files, bno);
+		//});
+		String msg = insertRes + "건 저장되었습니다.";
+		rttr.addAttribute("msg", msg);
+		return "redirect:/file/fileupload";
+	}
+	
+	@PostMapping("/file/fileuploadActionFetch")
+	public @ResponseBody Map<String, Object> fileuploadActionFetch(List<MultipartFile> files, int bno) {
+		log.info("fileuploadActionFetch");
+		int insertRes=fileupload(files, bno);
+		log.info("업로드 건수 : " + insertRes);
+		return responseMap("success", insertRes + "건 저장되었습니다.");
+	}
+	
+	@Autowired
+	FileuploadService service;
+	
+	@GetMapping("/file/list/{bno}")
+	public @ResponseBody Map<String, Object> fileuploadList(@PathVariable("bno") int bno) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", service.GetList(bno));
+		return map;
+	}
+
+	
+	//중복 방지용 업로드 날짜를 폴더이름으로 사용 : 23/07/18
+	public String getFolder() {
+		LocalDate currentDate = LocalDate.now();
+		log.info("CurrentDate : " + currentDate);
+		
+		String uploadPath = currentDate.toString().replace("-", File.separator)+File.separator;
+		log.info("경로 : " + uploadPath);
+		
+		// 폴더 생성(없으면)
+		File saveDir = new File(ATTACHES_DIR+uploadPath);
+		if(!saveDir.exists()) {
+			//mkdirs : 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
+			if(saveDir.mkdirs()) {
+				log.info("폴더 생성");
+				
+			} else {
+				log.info("폴더 생성 실패");
+			}
+		}
+		
+		return uploadPath;
+	}
+	
+	public static void main(String[] args) {
+		LocalDate currentDate = LocalDate.now();
+		String uploadPath = currentDate.toString().replace("-", File.separator)+File.separator;
+		
+		log.info("CurrentDate : " + currentDate);
+		log.info("CurrentDate.toString() : " + currentDate.toString());
+		log.info("경로 : " + uploadPath);
+		
+		// 폴더 생성(없으면)
+		File saveDir = new File(ATTACHES_DIR+uploadPath);
+		if(!saveDir.exists()) {
+			saveDir.mkdirs();
+		}
+
+	}
+	public int fileupload(List<MultipartFile> files, int bno) {
+	
 		int insertRes=0;
 		//files.forEach(file->{
 		for(MultipartFile file : files) {	
@@ -123,60 +189,7 @@ public class FileuploadController {
 					e.printStackTrace();
 				}
 			}	
-		//});
-		String msg = insertRes + "건 저장되었습니다.";
-		rttr.addAttribute("msg", msg);
-		return "redirect:/file/fileupload";
-	}
-	
-	@Autowired
-	FileuploadService service;
-	
-	@GetMapping("/file/list/{bno}")
-	public @ResponseBody Map<String, Object> fileuploadList(@PathVariable("bno") int bno) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", service.GetList(bno));
-		return map;
-	}
-
-	
-	//중복 방지용 업로드 날짜를 폴더이름으로 사용 : 23/07/18
-	public String getFolder() {
-		LocalDate currentDate = LocalDate.now();
-		log.info("CurrentDate : " + currentDate);
-		
-		String uploadPath = currentDate.toString().replace("-", File.separator)+File.separator;
-		log.info("경로 : " + uploadPath);
-		
-		// 폴더 생성(없으면)
-		File saveDir = new File(ATTACHES_DIR+uploadPath);
-		if(!saveDir.exists()) {
-			//mkdirs : 만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
-			if(saveDir.mkdirs()) {
-				log.info("폴더 생성");
-				
-			} else {
-				log.info("폴더 생성 실패");
-			}
-		}
-		
-		return uploadPath;
-	}
-	
-	public static void main(String[] args) {
-		LocalDate currentDate = LocalDate.now();
-		String uploadPath = currentDate.toString().replace("-", File.separator)+File.separator;
-		
-		log.info("CurrentDate : " + currentDate);
-		log.info("CurrentDate.toString() : " + currentDate.toString());
-		log.info("경로 : " + uploadPath);
-		
-		// 폴더 생성(없으면)
-		File saveDir = new File(ATTACHES_DIR+uploadPath);
-		if(!saveDir.exists()) {
-			saveDir.mkdirs();
-		}
-
+		return insertRes;
 	}
 	}
 	

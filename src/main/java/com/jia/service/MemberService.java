@@ -14,7 +14,7 @@ public interface MemberService {
 	
 	public int idCheck(MemberVO member);
 	
-	
+//	public String getAccessToken(String code);
 	
 //	public Member login(Member paramMember, Model model) {
 //		Member member = dao.login(paramMember);

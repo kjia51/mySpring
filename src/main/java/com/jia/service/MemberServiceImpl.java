@@ -1,9 +1,30 @@
 package com.jia.service;
 
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.jia.mapper.MemberMapper;
 import com.jia.vo.MemberVO;
 
@@ -46,6 +67,10 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberMapper.idCheck(member);
 	}
+
+
+
+
 
 
 }
