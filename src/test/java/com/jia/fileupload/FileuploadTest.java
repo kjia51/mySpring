@@ -48,4 +48,13 @@ public class FileuploadTest {
 			log.info(file.getUploadpath());
 		});
 	}
+	@Test
+	public void getDeleteTest() {
+		FileuploadVO file = new FileuploadVO();
+		file.setUuid("4b7b25ab-cc74-45ca-87ad-f88cf012f053");
+		file.setBno(141);
+		
+		int res = fileuploadMapper.delete(file);
+		assertEquals(1, res);
+	}
 }

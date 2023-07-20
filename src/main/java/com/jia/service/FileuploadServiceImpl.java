@@ -26,4 +26,10 @@ public class FileuploadServiceImpl implements FileuploadService {
 		return mapper.insert(file);
 	}
 
+	@Override
+	public int delete(FileuploadVO file) {
+		// TODO Auto-generated method stub
+		return mapper.delete(file);
+	}
+
 }

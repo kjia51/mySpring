@@ -11,4 +11,6 @@ public interface FileuploadService {
 	public List<FileuploadVO> GetList(int bno);
 	
 	public int insert(FileuploadVO file);
+	
+	public int delete(FileuploadVO file);
 }

@@ -8,4 +8,6 @@ public interface FileuploadMapper {
 	public List<FileuploadVO> GetList(int bno);
 	
 	public int insert(FileuploadVO file);
+	
+	public int delete(FileuploadVO file);
 }

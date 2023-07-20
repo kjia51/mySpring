@@ -11,6 +11,7 @@ window.addEventListener('load', function(){
 	btnGetList.addEventListener('click', function(){
 		getFileList();
 	});
+	/*
 	//파일업로드
 	btnfileupload.addEventListener('click', function(){
 		//웹 개발에서 HTML폼데이터를 JavaScript로 쉽게 .. 전송하는 방법을 제공하는 API이다
@@ -39,6 +40,7 @@ window.addEventListener('load', function(){
 				// 서버에 전송 가능한 형식인지 확인
 				// 최대 전송 가능한 용량을 초과하였는지
 			}
+			*/
 		}
 		
 		fetch('/file/fileuploadActionFetch'
@@ -75,6 +77,9 @@ function checkExtension(fileName, fileSize){
 function fileuploadRes(map){
 	if(map.result=='success'){
 	divFileuploadRes.innerHTML=map.msg;		
+	//게시글 등록
+	} else{
+		alert(map.msg);
 	}
 }
 function getFileList(){
@@ -83,12 +88,39 @@ function getFileList(){
 		.then(response=>response.json())
 		.then(map => viewFileList(map));
 }
+
+function attachFileDelete(e){
+	let bno = e.dataset.bno;
+	let uuid = e.dataset.uuid;
+	//fetch('/file/delete/'+uuid+'/'+bno)
+	fetch(`/file/delete/\${uuid}/\${bno}`)
+		.then(response=>response.json())
+		.then(map=>fileDeleteRes(map));
+}
+
+function fileDeleteRes(map){
+	if(map.result=='success'){
+		console.log(map.msg);
+		getFileList();
+	} else{
+		alert(map.msg);
+	}
+	
+}
+
+
 function viewFileList(map){
 	console.log(map);
 	let content = '';
 	if(map.list.length > 0){
 	map.list.forEach(function(item,index){
-		content += item.filename + '<br>';
+		let savePath = encodeURIComponent(item.savePath);
+		
+		content += '<a href="/file/download?fileName='+savePath+'">'
+				+ item.filename
+				 +'</a>' 
+				+ '<i onclick="attachFileDelete(this)" data-bno="'+item.bno+'" data-uuid="'+item.uuid+'" class="fa-solid fa-trash"></i>'
+				+'<br>';
 	})		
 	} else{
 		content = '등록된 파일이 없습니다.'
@@ -96,18 +128,18 @@ function viewFileList(map){
 	fileUpload.innerHTML = content;
 }
 </script>
+<script src="https://kit.fontawesome.com/5a87685c31.js" crossorigin="anonymous"></script>
 </head>
 <body>
-res : ${param.msg }
+<!--res : ${param.msg }
 	<h2>파일업로드</h2>
-	<form method="post" action="/file/fileuploadAction" enctype="multipart/form-data" name="fileuploadForm">
 		<h2>파일선택</h2>
-		bno : <input type="text" name="bno" id="bno" value="141"><br>
-		<input type="file" name="files" multiple="multiple"><br>
-		<input type="file" name="files"><br>
-		<input type="file" name="files"><br>
-		<button type="submit">파일업로드</button>
 		<button type="button" id="btnfileupload">Fetch파일업로드</button>
+  -->
+	<form method="post" action="/file/fileuploadAction" enctype="multipart/form-data" name="fileuploadForm">
+		bno : <input type="text" name="bno" id="bno" value="141"><br>
+		<input class="form-control" type="file" name="files" multiple="multiple"><br>
+		<button type="submit">파일업로드</button>
 	</form>
 	res : ${param.msg }
 	<div id="divFileuploadRes">

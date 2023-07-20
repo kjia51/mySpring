@@ -17,7 +17,7 @@
 
 <script>
 
-window.onload=function(){
+window.addEventListener('load', function(){
 	String msg = ${msg};
 	if(msg!=""){
 		document.querySelector(".modal-body").innerHTML = msg;
@@ -56,6 +56,7 @@ window.onload=function(){
   <div class="list-group w-auto">
   
   
+	<%@include file="../file/fileupload.jsp" %>
   <form method="post" action="/board/write">
   <div class="mb-3">
     <label for="title" class="form-label">제목</label>
@@ -69,10 +70,11 @@ window.onload=function(){
     <label for="writer" class="form-label">작성자</label>
     <input type="text" name="writer" id="writer" class="form-control" value="${userName }">
 	</div>
-	  <div class="mb-3">
+	 <!-- <div class="mb-3">
     <label for="writer" class="form-label">첨부파일</label><br>
-   	<input type="file" name="files">
+   	<input class="form-control" type="file" name="files">
 	</div>
+	  -->
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 	<c:if test="${not empty board.bno }" var="res">
  	 <input type="text" name="bno" value="${board.bno }" >	

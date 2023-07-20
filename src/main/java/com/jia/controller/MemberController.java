@@ -1,28 +1,42 @@
 package com.jia.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+
 
 import com.jia.service.MemberService;
 import com.jia.vo.MemberVO;
 
+import jdk.internal.org.jline.utils.Log;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 
 //관리되는 컨트롤러가 되기 위해선 servlet-context.xml에 들어가서 component-scan 수정
 @Controller
-
+@Log4j
 public class MemberController extends CommonRestController {
 	
 	@Autowired
@@ -33,11 +47,48 @@ public class MemberController extends CommonRestController {
 	 * @return
 	 */
 
+//	@Autowired
+//	KakaoAPI kakaoservice;
+//	
+//	@RequestMapping("/login")
+//	public void login(@RequestParam("code") String code, HttpSession session) throws IOException{
+//		
+//		System.out.println("code :" + code);
+//		
+		//토큰 발급
+//		String access_Token = kakaoservice.getAccessToken(code);
+//		
+//		return "/board/list";
+//	}
 	
-	@GetMapping("/login")
-	public void login() {
-		
+	@RequestMapping("/")
+	public String main() {
+		return "login";
 	}
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+
+	@Autowired
+	MemberService memberService;
+	
+	@RequestMapping("/kakaologin")
+	public String login(@RequestParam("code") String code, HttpSession session) {
+		String access_Token = memberService.getAccessToken(code);
+	    HashMap<String, Object> userInfo = memberService.getUserInfo(access_Token);
+	    System.out.println("login Controller : " + userInfo);
+	    
+	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+	    if (userInfo.get("email") != null) {
+	        session.setAttribute("userId", userInfo.get("email"));
+	        session.setAttribute("access_Token", access_Token);
+	    }
+	    return "login";
+	}
+
+		
+	
 	
 	@GetMapping("logout")
 	public String logout(HttpSession session) {

@@ -1,9 +1,9 @@
 package com.jia.interceptor;
 
 
-import java.net.URLEncoder;
+//import java.net.URLEncoder;
 
-import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -22,8 +22,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
  *
  */
 
-@Component
-public class LoginInterceptor implements HandlerInterceptor{
+//@Component
+//public class LoginInterceptor implements HandlerInterceptor{
 	
 	/**
 	 * 로그인이 되어 있지 않은 경우 로그인 페이지로 이동
@@ -34,17 +34,17 @@ public class LoginInterceptor implements HandlerInterceptor{
 	 *   
 	 */
 	
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("userId")!=null
-				&& !session.getAttribute("userId").equals("")) {
-			return true;
-		} else {
-			String msg = URLEncoder.encode("로그인 후 사용가능한 메뉴입니다.","utf-8");
-			response.sendRedirect("/login?msg="+msg);
-			return false;
-		}
-	}
-}
+//	@Override
+//	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+//			throws Exception {
+//		HttpSession session = request.getSession();
+//		if(session.getAttribute("userId")!=null
+//				&& !session.getAttribute("userId").equals("")) {
+//			return true;
+//		} else {
+//			String msg = URLEncoder.encode("로그인 후 사용가능한 메뉴입니다.","utf-8");
+//			response.sendRedirect("/login?msg="+msg);
+//			return false;
+//		}
+//	}
+//}

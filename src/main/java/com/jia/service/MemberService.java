@@ -1,6 +1,8 @@
 package com.jia.service;
 
 
+import java.util.HashMap;
+
 import com.jia.vo.MemberVO;
 
 
@@ -14,7 +16,9 @@ public interface MemberService {
 	
 	public int idCheck(MemberVO member);
 	
-//	public String getAccessToken(String code);
+	public String getAccessToken(String code);
+	
+	public HashMap<String, Object> getUserInfo (String access_Token);
 	
 //	public Member login(Member paramMember, Model model) {
 //		Member member = dao.login(paramMember);
