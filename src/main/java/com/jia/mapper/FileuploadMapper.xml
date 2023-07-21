@@ -17,4 +17,11 @@
   	<delete id="delete">
   	delete tbl_attach where uuid = #{uuid} and bno=#{bno}
   	</delete>
+  	
+  	<select id="getOne" resultType="com.jia.vo.FileuploadVO">
+  		select t.* , uploadpath||uuid||'_'||filename savePath,
+		's_'||uploadpath||uuid||'_'||filename s_savePath
+		from tbl_attach t 
+		where bno=#{bno} and uuid=#{uuid}
+  	</select>
   </mapper>

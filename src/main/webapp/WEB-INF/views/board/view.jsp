@@ -40,15 +40,17 @@
 
 <script  type="text/javascript">
 window.addEventListener('load',function(){
-
-	btnEdit.addEventListener('click', function(){
-		viewForm.action='/board/edit';
-		viewForm.submit();	
+	if(${userId eq board.writer}){
+		btnEdit.addEventListener('click', function(){
+			viewForm.action='/board/edit';
+			viewForm.submit();	
+		btnDelete.addEventListener('click', function(){
+			viewForm.action='/board/delete';
+			viewForm.submit();	
 	});
-	btnDelete.addEventListener('click', function(){
-		viewForm.action='/board/delete';
-		viewForm.submit();	
 	});
+		
+	}
 	btnList.addEventListener('click', function(){
 		viewForm.action='/board/list';
 		viewForm.submit();	
@@ -70,9 +72,9 @@ window.addEventListener('load',function(){
 </script>
 
 <main class="container">
-  <input type="text" name="userId" value="${userId }" }>
-
-${userName }
+	<input type="text" name="userId" value="${userId }" >
+	<input type="text" name="userId" value="${board.writer }" >
+  <input type="text" name="userName" value="${userName }" >
   <div class="bg-light p-5 rounded">
     <h1>게시판 상세화면</h1>
     <p class="lead">부트스트랩을 이용한 게시판 만들기</p>
@@ -96,18 +98,28 @@ ${userName }
   </div>
   <div class="mb-3">
     <label for="writer" class="form-label">작성자</label>
-    <input type="text" name="writer" id="writer" class="form-control" readonly value="${board.writer }">
-    
+    <input type="text" name="writer" id="writer" class="form-control" readonly value="${board.writer }"> 
 	</div>
+  <div class="mb-3">
+    <label for="attachFile" class="form-label">첨부파일 목록</label><br>
+    <div class="form-control" id="attachFile">
+	<c:forEach items="${files }" var="file">
+    <a href="/file/download?fileName='${file.savePath }'">${file.filename }</a>	<br>
+	</c:forEach>
+    </div>   
+	</div>
+	<c:if test="${userId eq board.writer }">
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 	  <input type="button" id="btnEdit" value="수정">
 	  <input type="button" id="btnDelete" value="삭제">
 	</div>
+	</c:if>
 </form>
 <p></p>
 </div>
 <p></p>
 <div class="input-group">
+  <input type="text" name="replyer" value="${userId }" >
   <span class="input-group-text">답글작성</span>
   <input type="text" aria-label="First name" class="form-control" id="reply">
   <input type="hidden" aria-label="First name" class="form-control" id="replyer" value="${userId }">

@@ -10,4 +10,6 @@ public interface FileuploadMapper {
 	public int insert(FileuploadVO file);
 	
 	public int delete(FileuploadVO file);
+	
+	public FileuploadVO getOne(FileuploadVO file);
 }

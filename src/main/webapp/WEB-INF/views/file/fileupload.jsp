@@ -11,7 +11,7 @@ window.addEventListener('load', function(){
 	btnGetList.addEventListener('click', function(){
 		getFileList();
 	});
-	/*
+	
 	//파일업로드
 	btnfileupload.addEventListener('click', function(){
 		//웹 개발에서 HTML폼데이터를 JavaScript로 쉽게 .. 전송하는 방법을 제공하는 API이다
@@ -40,7 +40,7 @@ window.addEventListener('load', function(){
 				// 서버에 전송 가능한 형식인지 확인
 				// 최대 전송 가능한 용량을 초과하였는지
 			}
-			*/
+			
 		}
 		
 		fetch('/file/fileuploadActionFetch'
@@ -83,6 +83,10 @@ function fileuploadRes(map){
 	}
 }
 function getFileList(){
+	//let bno = '${board.bno}';
+	//if(bno){
+		
+	//}
 	let bno = document.querySelector("#bno").value;
 	fetch('/file/list/'+bno)
 		.then(response=>response.json())
@@ -134,7 +138,6 @@ function viewFileList(map){
 <!--res : ${param.msg }
 	<h2>파일업로드</h2>
 		<h2>파일선택</h2>
-		<button type="button" id="btnfileupload">Fetch파일업로드</button>
   -->
 	<form method="post" action="/file/fileuploadAction" enctype="multipart/form-data" name="fileuploadForm">
 		bno : <input type="text" name="bno" id="bno" value="141"><br>
@@ -147,6 +150,7 @@ function viewFileList(map){
 	</div>
 	<h2>파일리스트 조회</h2>
 	<button type="button" id="btnGetList">리스트 조회</button>
+	<button type="button" id="btnfileupload">Fetch파일업로드</button>
 	<div id="fileUpload"></div>
 </body>
 </html>

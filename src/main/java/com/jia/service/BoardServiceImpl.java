@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jia.mapper.BoardMapper;
 import com.jia.vo.BoardVO;
 import com.jia.vo.Criteria;
+import com.jia.vo.FileuploadVO;
 import com.jia.vo.PageDto;
 
 /**
@@ -28,11 +31,14 @@ import com.jia.vo.PageDto;
  *
  */
 @Service
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardMapper boardMapper;
-		
+	
+	@Autowired
+	private FileuploadService fileuploadService;
+
 	@Override
 	public List<BoardVO> getListXml(Criteria cri, Model model) {
 		/**
@@ -61,9 +67,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int insertSelectKey(BoardVO board) {
-		// TODO Auto-generated method stub
-		return boardMapper.insertSelectKey(board);
+	@Transactional(rollbackFor = Exception.class)
+	public int insertSelectKey(BoardVO board, List<MultipartFile> files) throws Exception {
+		// 게시물 업로드
+		int res = boardMapper.insertSelectKey(board);
+		// 
+		fileuploadService.fileupload(files, board.getBno());
+		return res;
 	}
 
 	@Override
@@ -74,13 +84,18 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int delete(int bno) {
-		// TODO Auto-generated method stub
+		//게시물을 삭제시 첨부된 파일이 있는 경우 오류가 발생
+		//첨부파일을 모두 삭제 - fileuploadService
+		//첨부파일 리스트 조회
+		//리스트를 돌면서 삭제 처리  - fileuploadService
 		return boardMapper.delete(bno);
 	}
 
 	@Override
-	public int update(BoardVO board) {
+	public int update(BoardVO board, List<MultipartFile> files) throws Exception {
 		// TODO Auto-generated method stub
+		
+		fileuploadService.fileupload(files, board.getBno());
 		return boardMapper.update(board);
 	}
 
@@ -103,6 +118,7 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.updateReplyCnt(bno, amount);
 	}
+
 
 
 

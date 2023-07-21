@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
@@ -223,6 +224,7 @@
 <main class="form-signin w-100 m-auto">
 
 <!-- 회원가입 폼 -->
+<c:if test="${userId eq null }">
   <form name='signupForm' style='display: none' >
 
     <img class="mb-4" src="../resources/img/heart.gif" alt="" width="300" height="200">
@@ -284,8 +286,12 @@
   	
   <button id='btnSignupView'>회원가입</button>
   <button id='btnSigninView'>로그인</button>
+</c:if>
 </main>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>    
 
+<c:if test="${userId ne null }">
+<c:redirect url="http://localhost:8080/board/list"/>
+</c:if>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>    
 </body>

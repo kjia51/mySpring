@@ -21,6 +21,24 @@
 		viewForm.submit();
 		
 	}
+	function attachFileDelete(e){
+		let bno = e.dataset.bno;
+		let uuid = e.dataset.uuid;
+		//fetch('/file/delete/'+uuid+'/'+bno)
+		fetch(`/file/delete/\${uuid}/\${bno}`)
+			.then(response=>response.json())
+			.then(map=>fileDeleteRes(map));
+	}
+
+	function fileDeleteRes(map){
+		if(map.result=='success'){
+			console.log(map.msg);
+			getFileList();
+		} else{
+			alert(map.msg);
+		}
+		
+	}
 </script>
 </head>
 <body>
@@ -45,13 +63,24 @@
   <div class="mb-3">
     <label for="writer" class="form-label">작성자</label>
     <input type="text" name="writer" id="writer" class="form-control"  value="${board.writer }">
-    
 	</div>
+    	<div class="mb-3">
+    <label for="writer" class="form-label">첨부파일</label><br>
+   	<input class="form-control" type="file" name="files" multiple="multiple">
+	</div>
+    <label for="attachFile" class="form-label">첨부파일 목록</label>
+	<div class="form-control" id="attachFile">
+	<c:forEach items="${files }" var="file">
+    <a href="/file/download?fileName='${file.savePath }'">${file.filename }</a>
+    <i onclick="location.href='../board/EditAction'" data-bno="${file.bno }" data-uuid="${file.uuid }" class="fa-solid fa-trash"></i>	<br>
+	</c:forEach>
+    </div><br>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 	  <input type="button" onclick="requestAction('editAction')" value="수정">
 	  <input type="button" onclick="location.href='/board/list'" value="목록">
 	  <input type="button" onclick="requestAction('delete')" value="삭제">
 	</div>
+	
 </form>
 </div>
 </main>

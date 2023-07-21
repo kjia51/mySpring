@@ -55,9 +55,11 @@ window.addEventListener('load', function(){
   <p></p>
   <div class="list-group w-auto">
   
-  
-	<%@include file="../file/fileupload.jsp" %>
-  <form method="post" action="/board/write">
+  <!-- {param.pageNo==''?'1':param.pageNO} -->
+<!--  세션에 저장 = 내장객체에 저장, 
+
+ -->
+  <form method="post" action="/board/write" name="viewForm" enctype="multipart/form-data">
   <div class="mb-3">
     <label for="title" class="form-label">제목</label>
     <input type="text" name="title" id="title" class="form-control"   value="${board.title }">
@@ -68,13 +70,22 @@ window.addEventListener('load', function(){
   </div>
   <div class="mb-3">
     <label for="writer" class="form-label">작성자</label>
-    <input type="text" name="writer" id="writer" class="form-control" value="${userName }">
+    <input type="text" name="writer" id="writer" class="form-control" value="${userId }">
+    <!-- 
+    <c:if test="${empty board.writer}">
+    <input type="text" name="writer" id="writer" class="form-control" value="">
+    </c:if>
+    -->
+    
+    <c:if test="${not empty board.writer }">
+    <input type="text" name="writer" id="writer" class="form-control" value="${userId }">
+    </c:if>
 	</div>
-	 <!-- <div class="mb-3">
+	<div class="mb-3">
     <label for="writer" class="form-label">첨부파일</label><br>
-   	<input class="form-control" type="file" name="files">
+   	<input class="form-control" type="file" name="files" multiple="multiple">
 	</div>
-	  -->
+
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
 	<c:if test="${not empty board.bno }" var="res">
  	 <input type="text" name="bno" value="${board.bno }" >	

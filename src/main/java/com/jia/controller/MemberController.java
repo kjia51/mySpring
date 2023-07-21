@@ -1,36 +1,23 @@
 package com.jia.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-
 
 import com.jia.service.MemberService;
 import com.jia.vo.MemberVO;
 
-import jdk.internal.org.jline.utils.Log;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 
@@ -82,6 +69,7 @@ public class MemberController extends CommonRestController {
 	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
 	    if (userInfo.get("email") != null) {
 	        session.setAttribute("userId", userInfo.get("email"));
+	        session.setAttribute("userName", userInfo.get("nickname"));
 	        session.setAttribute("access_Token", access_Token);
 	    }
 	    return "login";
