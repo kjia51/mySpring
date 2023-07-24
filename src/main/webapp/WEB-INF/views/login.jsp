@@ -157,11 +157,11 @@
 		//)
 		
 	//}
-
 </script>
-
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="../resources/js/common.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"charset="utf-8"></script>
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
 <link href="../resources/css/signin.css" rel="stylesheet">
@@ -277,12 +277,13 @@
       </label>
     </div>
     <button class="btn btn-lg btn-primary" style="width: 150px; height:40px;" type="submit" id='btnLogin'>로그인</button>
+
+
+
     <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=12058067f10f2a5ed33132f900363ed0&redirect_uri=http://localhost:8080/kakaologin"><img src="../resources/img/login.png" width=150px height=40px"></a>
+    <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=O3lTbRxuA6EiKIrybIJk&redirect_uri=http://localhost:8080/naverlogin&state=test"><img src="../resources/img/naverlogin.png" width=150px height=40px"></a>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
   </form>
-    <input type="hidden" name="" id=""/>
-    <input type="hidden" name="" id=""/>
-    <input type="hidden" name="" id=""/>
   	
   <button id='btnSignupView'>회원가입</button>
   <button id='btnSigninView'>로그인</button>

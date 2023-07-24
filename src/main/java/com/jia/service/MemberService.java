@@ -19,6 +19,10 @@ public interface MemberService {
 	public String getAccessToken(String code);
 	
 	public HashMap<String, Object> getUserInfo (String access_Token);
+
+	String getAccessNaverToken(String code);
+	
+	public HashMap<String, Object> getNaverUserInfo (String access_Token);
 	
 //	public Member login(Member paramMember, Model model) {
 //		Member member = dao.login(paramMember);

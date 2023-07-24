@@ -99,15 +99,14 @@ function replyView(map){
 	 +'<tr id="tr'+reply.rno+'" data-value= "'+ reply.reply+'">'
 	 +'<td>'+reply.rno+'</td>'
 	 +'<th scope="row" class="text-start">'
-	    + '			<p><a href="#"  onclick="replyDView('+reply.rno+')">' + reply.reply + '</a></p>';
+	    + '<p><a href="#"  onclick="replyDView('+reply.rno+')">' + reply.reply + '</a></p>';
 	    if(replyer.value==reply.replyer){ 
-	    	replyBlock+=
-	    + '<p><i class="fa-regular fa-pen-to-square" onclick="replyEdit('+reply.rno+')"></i>'
-	    + '<i class="fa-regular fa-trash-can" onclick="replyDelete('+reply.rno+')"></i></p>';
+	    	replyBlock+= ''
+
+	    + '<p><i class="fa-regular fa-trash-can" onclick="replyDelete('+reply.rno+')"></i></p>';
 	    }
 
-	    replyBlock+='</th>'
-	    +'<td>'+ reply.replyer+'</td>'
+	    replyBlock+='</th><td>'+ reply.replyer+'</td>'
 	 +'<td>'+ reply.updateDate+'</td>'
 	 +'</tr>'                                        
 	}); 

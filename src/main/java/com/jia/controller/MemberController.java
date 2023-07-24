@@ -57,6 +57,7 @@ public class MemberController extends CommonRestController {
 		return "login";
 	}
 
+
 	@Autowired
 	MemberService memberService;
 	
@@ -75,7 +76,20 @@ public class MemberController extends CommonRestController {
 	    return "login";
 	}
 
-		
+	@RequestMapping("/naverlogin")
+	public String naverlogin(@RequestParam("code") String code, HttpSession session) {
+		String access_Token = memberService.getAccessNaverToken(code);
+	    HashMap<String, Object> userInfo = memberService.getNaverUserInfo(access_Token);
+	    System.out.println("login Controller : " + userInfo);
+	    
+	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+	    if (userInfo.get("name") != null) {
+	        //session.setAttribute("userId", userInfo.get("email"));
+	        session.setAttribute("name", userInfo.get("name"));
+	        session.setAttribute("access_Token", access_Token);
+	    }
+	    return "login";
+	}
 	
 	
 	@GetMapping("logout")
