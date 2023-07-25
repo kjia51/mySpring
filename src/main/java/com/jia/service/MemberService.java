@@ -3,6 +3,10 @@ package com.jia.service;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.ui.Model;
+
 import com.jia.vo.MemberVO;
 
 
@@ -23,6 +27,8 @@ public interface MemberService {
 	String getAccessNaverToken(String code);
 	
 	public HashMap<String, Object> getNaverUserInfo (String access_Token);
+
+	public void naverLogin(HttpServletRequest request, Model model);
 	
 //	public Member login(Member paramMember, Model model) {
 //		Member member = dao.login(paramMember);

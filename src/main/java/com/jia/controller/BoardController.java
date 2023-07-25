@@ -18,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jia.service.BoardService;
 import com.jia.service.FileuploadService;
+import com.jia.service.MapService;
 import com.jia.service.ReplyService;
+import com.jia.vo.AnimalVO;
 import com.jia.vo.BoardVO;
 import com.jia.vo.Criteria;
 import com.jia.vo.FileuploadVO;
@@ -112,6 +114,17 @@ public class BoardController {
 	 * @param bno
 	 * @param model
 	 */
+	@Autowired
+	MapService mapService;
+	
+	@GetMapping("/map")
+	public String map(Model model) {
+		List<AnimalVO> list = mapService.mapList();
+		model.addAttribute("lists",list);
+		return "/map";
+	}
+	
+	
 	@GetMapping("view")
 	public String getOne(@Param("bno") int bno, Model model, Criteria cri) {
 		BoardVO board = boardService.getOne(bno);

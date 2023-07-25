@@ -34,4 +34,6 @@ public interface BoardMapper {
 	// 파라메터 두개 이상일때는 @param 처리를 해주어야함 !!
 
 	public int updateReplyCnt(@Param("bno") int bno, @Param("amount") int amount);
+	
+	
 }

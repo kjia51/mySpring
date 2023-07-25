@@ -1,3 +1,6 @@
+<%@page import="java.math.BigInteger"%>
+<%@page import="java.security.SecureRandom"%>
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -282,11 +285,24 @@
 
     <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=12058067f10f2a5ed33132f900363ed0&redirect_uri=http://localhost:8080/kakaologin"><img src="../resources/img/login.png" width=150px height=40px"></a>
     <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=O3lTbRxuA6EiKIrybIJk&redirect_uri=http://localhost:8080/naverlogin&state=test"><img src="../resources/img/naverlogin.png" width=150px height=40px"></a>
+    <%
+    String clientId = "9VJWkFye8SCONJDsevSS";//애플리케이션 클라이언트 아이디값";
+    String redirectURI = URLEncoder.encode("http://localhost:8080/login/naver_callback", "UTF-8");
+    SecureRandom random = new SecureRandom();
+    String state = new BigInteger(130, random).toString();
+    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+    apiURL += "&client_id=" + clientId;
+    apiURL += "&redirect_uri=" + redirectURI;
+    apiURL += "&state=" + state;
+    session.setAttribute("state", state);
+ %>
+  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
   </form>
   	
   <button id='btnSignupView'>회원가입</button>
   <button id='btnSigninView'>로그인</button>
+  
 </c:if>
 </main>
 

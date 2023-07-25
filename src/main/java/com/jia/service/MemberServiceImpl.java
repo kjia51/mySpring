@@ -9,12 +9,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -265,5 +271,91 @@ public class MemberServiceImpl implements MemberService{
 		return userInfo;
 	}
 
+	@Autowired
+	ApiExamMemberProfile apiExam;
+	
+	@Override
+	public void naverLogin(HttpServletRequest request, Model model) {
+		// TODO Auto-generated method stub
+		try {
+			//callback 처리 -> accessToken 
+			Map<String, String>  callbackRes = callback(request);
+			
+			String access_token = callbackRes.get("access_token");
+			//accessToken -> 사용자 정보 조회
+			Map<String, Object> responseBody = apiExam.getMemberProfile(access_token);
+			
+			Map<String, String> response = (Map<String, String>) responseBody.get("response");
+			System.out.println("==============naverLogin===============");
+			System.out.println(response.get("name"));
+			System.out.println(response.get("nickname"));
+			System.out.println(response.get("email"));
+			
+			request.setAttribute("name", response.get("name"));
+			request.setAttribute("nickname", response.get("nickname"));
+			request.setAttribute("email", response.get("email"));
+			
+			model.addAttribute("name", response.get("name"));
+			model.addAttribute("email", response.get("email"));
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public Map<String, String> callback(HttpServletRequest request) throws Exception{
+		// 변수 지정
+	    String clientId = "9VJWkFye8SCONJDsevSS";//애플리케이션 클라이언트 아이디값";
+	    String clientSecret = "EAS6SsG9Uv";//애플리케이션 클라이언트 시크릿값";
+	    String code = request.getParameter("code");
+	    String state = request.getParameter("state");
+	    try {
+	    String redirectURI = URLEncoder.encode("http://localhost:8080/login/naver_callback", "UTF-8");
+	    //요청 url - > 네이버 로그인 및 사용자 정보제공 동의 -> 콜백으로 코드를 제공
+	    String apiURL;
+	    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+	    apiURL += "client_id=" + clientId;
+	    apiURL += "&client_secret=" + clientSecret;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&code=" + code;
+	    apiURL += "&state=" + state;
+	    String access_token = "";
+	    String refresh_token = "";
+	    System.out.println("apiURL="+apiURL);
+	      URL url = new URL(apiURL);
+	      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	      con.setRequestMethod("GET");
+	      int responseCode = con.getResponseCode();
+	      BufferedReader br;
+	      System.out.print("responseCode="+responseCode);
+	      if(responseCode==200) { // 정상 호출
+	        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	      } else {  // 에러 발생
+	        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	      }
+	      String inputLine;
+	      StringBuffer res = new StringBuffer();
+	      while ((inputLine = br.readLine()) != null) {
+	        res.append(inputLine);
+	      }
+	      br.close();
+	      if(responseCode==200) {
+	    	  System.out.println("token 요청" + res.toString());
+	    	  Map<String, String>  map = new HashMap<String, String>();
+	    	  ObjectMapper objectMapper = new ObjectMapper();
+	    	  map = objectMapper.readValue(res.toString(), Map.class);
+	    	  return map;
+	      }
+	      else {
+	    	  throw new Exception("callback 반환코드 : "+responseCode);
+	      }
+	    } catch (Exception e) {
+	      System.out.println(e);
+	      throw new Exception("callback 처리 중 오류가 발생하였습니다");
+	    }
+	}
+	
 
 }

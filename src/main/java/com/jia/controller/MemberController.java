@@ -3,6 +3,7 @@ package com.jia.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,23 @@ public class MemberController extends CommonRestController {
 	public String login() {
 		return "login";
 	}
+	@GetMapping("/list")
+	public String list() {
+		return "list";
+	}
+	
+	@GetMapping("/login/naver")
+	public String naverlogin() {
+		return "/login/naver";
+	}
+	
+	@GetMapping("/login/naver_callback")
+	public String naverlogin_callback(HttpServletRequest request, Model model) {
+		//return "/login/naver_callback";
+		service.naverLogin(request, model);
+		return "/login/naver";
+	}
+	
 
 
 	@Autowired
