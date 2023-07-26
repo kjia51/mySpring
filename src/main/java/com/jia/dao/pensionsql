@@ -1,0 +1,30 @@
+//5000개
+delete from animal where not (category = '펜션' or category = '동물병원');
+
+select count(*) from animal where category = '펜션' or category = '동물병원';
+
+select count(*) from animal where not (category = '펜션' or category = '동물병원');
+
+select count(*) from animal;
+drop table pension;
+delete from pension;
+
+drop sequence pension_seq;
+CREATE SEQUENCE pension_seq;
+
+CREATE TABLE pension (
+	p_Id	varchar(10)	NOT NULL,
+	pName	varchar(50)	NULL,
+	Addr	varchar(50)	NULL,
+	price	varchar(30)	NULL,
+    category varchar(30)	NULL, 
+	openHour	varchar(30)	NULL,
+	ParkYN	varchar(10)	NULL,
+	checkYN	varchar(1)	NULL,
+	registerImg	varchar(30)	NULL,
+	pensionImg	varchar(30)	NULL,
+    latitude	varchar(30)	NULL,
+    longitude	varchar(30)	NULL
+);
+
+select count(*) from pension;

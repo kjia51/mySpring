@@ -123,6 +123,14 @@ public class BoardController {
 		model.addAttribute("lists",list);
 		return "/map";
 	}
+	@GetMapping("/geo")
+	public String geo() {
+		return "/geo";
+	}
+	@GetMapping("/pension")
+	public String list() {
+		return "/pension";
+	}
 	
 	
 	@GetMapping("view")

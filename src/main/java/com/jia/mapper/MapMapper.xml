@@ -2,8 +2,8 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.jia.mapper.MapMapper">
-  	<select id="mapList" resultType="com.jia.vo.AnimalVO">
-  	 select latitude, longitude from animal where category='펜션'
+  	<select id="mapList" resultType="com.jia.vo.PensionVO">
+  	 select latitude, longitude from pension where category='펜션'
   	</select>
   
   </mapper>

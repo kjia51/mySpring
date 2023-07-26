@@ -35,26 +35,27 @@ public class AnimalDao {
         	JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
         	JSONArray dataArray = (JSONArray)jsonObject.get("data");
 
-        	String sql = "insert into animal values(?,?,?,?,?,?,?)";
+        	String sql = "insert into pension(p_Id, pName, Addr, category, openHour, ParkYN, latitude, longitude) values(pension_seq.nextval,?,?,?,?,?,?,?)";
     		try (Connection conn = ConnectionUtil.getConnection();){
     			PreparedStatement pstmt = conn.prepareStatement(sql);
     			
 
             for (Object obj : dataArray) {
                 JSONObject dataObject = (JSONObject) obj;
-                String fName = (String) dataObject.get("시설명");
+                String pName = (String) dataObject.get("시설명");
+                String Addr = (String) dataObject.get("도로명주소");
                 String category = (String) dataObject.get("카테고리3");
-                String roadAddress = (String) dataObject.get("도로명주소");
-                String phoneNum = (String) dataObject.get("전화번호");
-                String operationHour = (String) dataObject.get("운영시간");
+                String openHour = (String) dataObject.get("운영시간");
+                String ParkYN = (String) dataObject.get("주차 가능여부");
+
                 String latitude = (String) dataObject.get("경도");
                 String longitude = (String) dataObject.get("위도");
             
-            		pstmt.setString(1, fName);
-            		pstmt.setString(2, category);
-            		pstmt.setString(3, roadAddress);
-            		pstmt.setString(4, phoneNum);
-            		pstmt.setString(5, operationHour);
+            		pstmt.setString(1, pName);
+            		pstmt.setString(2, Addr);
+            		pstmt.setString(3, category);
+            		pstmt.setString(4, openHour);
+            		pstmt.setString(5, ParkYN);
             		pstmt.setString(6, latitude);
             		pstmt.setString(7, longitude);
             		int res = pstmt.executeUpdate();
