@@ -3,7 +3,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.jia.mapper.MapMapper">
   	<select id="mapList" resultType="com.jia.vo.PensionVO">
-  	 select latitude, longitude from pension where category='펜션'
+  	 select addr, openhour, ParkYN, latitude, longitude from pension where category='펜션'
   	</select>
-  
+  	<!--  
+  	 <include refid="crisql"></include>
+  	<sql id="crisql">
+		<choose>
+			<when test="searchField == 'title'">
+				and title like '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchField == 'content'">
+				and content like '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchField == 'writer'">
+				and writer like '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchField == 'bno'">
+				and bno like '%'||#{searchWord}||'%'
+			</when>
+		</choose>
+	</sql>
+	-->
   </mapper>
