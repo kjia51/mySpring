@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>  
+<!-- TEST -->
 <%@include file="searchForm.jsp" %>
 </body>
 </html>
